@@ -1,69 +1,77 @@
+"use client"
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import { FaPlus } from "react-icons/fa";
+import { baseLink, storageLink } from '../config/Apilink';
 
 const Services = () => {
-    const services = [
-        {
-            id: 1,
-            title: "Cardiology",
-            description:
-                "There are many variations of passages of Lorem Ipsum available. There are many variations of passages of Lorem Ipsum available.",
-            image: "/images/pills1.jpg",
-            link: "",
-        },
-        {
-            id: 2,
-            title: "Endocrinology",
-            description:
-                "There are many variations of passages of Lorem Ipsum available. There are many variations of passages of Lorem Ipsum available.",
-            image: "/images/medicine.jpg",
-            link: "",
-        },
-        {
-            id: 3,
-            title: "Neurology",
-            description:
-                "There are many variations of passages of Lorem Ipsum available. There are many variations of passages of Lorem Ipsum available.",
-            image: "/images/medical.avif",
-            link: "",
-        },
-    ];
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    // Fetch services data from the API
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const response = await fetch(`${baseLink}/service`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch services');
+                }
+                const data = await response.json();
+                setServices(data); // Assuming the API response is an array of services
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchServices();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <>
+            <section
+                className="service bg-primary px-5 lg:px-28 my-20 pb-0 bg-cover bg-center"
 
-            <section className="service bg-primary px-5 lg:px-28 my-20 pb-0 bg-cover bg-center" style={{ backgroundImage: "url('/path-to-background.jpg')" }}>
-                <div className=" mx-auto px-4">
+            >
+                <div className="mx-auto px-4">
                     <div className="text-center">
-                        <span className="inline-block text-[0.875rem] leading-[1.375rem] font-semibold tracking-wider uppercase text-primary bg-[#d3e9fb] px-2 py-1 rounded-[3px] mb-2">Our Services</span>
-                        <h5 className="  text-2xl font-bold mb-5 ">What Facilities We Provided</h5>
+                        <span className="inline-block text-[0.875rem] leading-[1.375rem] font-semibold tracking-wider uppercase text-primary bg-[#d3e9fb] px-2 py-1 rounded-[3px] mb-2">
+                            Our Services
+                        </span>
+                        <h5 className="text-2xl font-bold mb-5">What Facilities We Provided</h5>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {services.map((service) => (
                             <div key={service.id} className="bg-white shadow-lg rounded-none overflow-hidden">
                                 <div className="relative">
                                     <Image
-                                        src={service.image}
-                                        alt={service.title}
+                                        src={`${storageLink}/${service.image}`}
+                                        alt={service?.title}
                                         width={500}
                                         height={300}
                                         className="w-full h-64 object-cover"
                                     />
-                                    <div className="absolute top-4 right-4 bg-primary text-white rounded-full p-3">
-
-                                    </div>
+                                    <div className="absolute top-4 right-4 bg-primary text-white rounded-full p-3"></div>
                                 </div>
                                 <div className="p-6">
                                     <h5 className="text-lg font-semibold mb-2">{service.title}</h5>
-                                    <p className="text-gray-600 mb-4">{service.description}</p>
+                                    <p className="text-gray-600 mb-4">{service.text}</p>
                                     <Link
-                                        href={service.link}
+                                        href={service.link || '#'}
                                         className="text-primary hover:text-blue-400 font-medium hover:underline inline-flex items-center"
                                     >
-                                        Read More <FaPlus className='text-sm ml-2' />
+                                        Read More <FaPlus className="text-sm ml-2" />
                                     </Link>
                                 </div>
                             </div>
@@ -72,11 +80,9 @@ const Services = () => {
                 </div>
             </section>
 
-
-
             <section className="common-section road-ahead py-14 px-5 lg:px-28 bg-gray-100" id='learn'>
-                <div className="container mx-auto px-4 lg:px-8">
-                    <h2 className="text-uppercase text-[#03a297] text-4xl font-semibold mb-5 animate-fadeInUp">
+                <div className="container mx-auto px-0 lg:px-8">
+                    <h2 className="text-uppercase text-[#03a297] text-xl md:text-4xl font-semibold mb-5 animate-fadeInUp">
                         Sawa Pharma (India) Pvt. Ltd.
                     </h2>
                     <div className="flex flex-col lg:flex-row lg:space-x-10">
@@ -92,7 +98,7 @@ const Services = () => {
                                 Sawa's systems enable us to manufacture quality pharmaceutical products and
                                 support the necessary and critical steps to achieving regulatory approval.
                             </p>
-                            <h2 className='text-2xl font-semibold mt-8'>Quality Assurance
+                            <h2 className='texl-lg lg:text-2xl font-semibold mt-8'>Quality Assurance
                             </h2>
                             <p className="text-base text-gray-700 text-justify animate-fadeInUp">
                                 We are renowned in the industry as a quality centric organization, which follows each
@@ -122,19 +128,20 @@ const Services = () => {
 
                     {/* Additional Content */}
                     {/* <div className="mt-8 animate-fadeInUp">
-                        <p className="text-sm text-gray-700">
-                            Speedy introduction of generic drugs into the market has remained in focus and is expected to benefit the Indian pharmaceutical companies. In addition, the thrust on rural health programmes, lifesaving drugs and preventive vaccines also augurs well for the pharmaceutical companies.
-                        </p>
+        <p className="text-sm text-gray-700">
+            Speedy introduction of generic drugs into the market has remained in focus and is expected to benefit the Indian pharmaceutical companies. In addition, the thrust on rural health programmes, lifesaving drugs and preventive vaccines also augurs well for the pharmaceutical companies.
+        </p>
 
-                        <p className="text-sm text-gray-700 mt-4 italic">
-                            <strong>References: </strong>
-                            Consolidated FDI Policy, Press Information Bureau (PIB), Media Reports, Pharmaceuticals Export Promotion Council, AIOCD-AWACS, IQVIA, Union Budget 2023-24, Interim Budget 2024-25
-                        </p>
-                    </div> */}
+        <p className="text-sm text-gray-700 mt-4 italic">
+            <strong>References: </strong>
+            Consolidated FDI Policy, Press Information Bureau (PIB), Media Reports, Pharmaceuticals Export Promotion Council, AIOCD-AWACS, IQVIA, Union Budget 2023-24, Interim Budget 2024-25
+        </p>
+    </div> */}
                 </div>
             </section>
         </>
-    )
-}
 
-export default Services
+    );
+};
+
+export default Services;

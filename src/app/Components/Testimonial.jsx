@@ -34,7 +34,7 @@ const Testimonials = () => {
 
     return (
         <section id="reviews" className="bg-gray-100 py-20 px-5 lg:px-28">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-0 lg:px-4">
                 <div className="text-center mb-12 w-full lg:w-2/4 mx-auto">
                     <h3 className="text-4xl font-semibold text-steelblue mb-4">
                         What Our Patients Say

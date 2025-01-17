@@ -1,94 +1,109 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
-
-const tablets = [
-    {
-      id: 1,
-      name: "Acebrophylline Capsules",
-      composition: "Each Hard Gelatin Capsule Contains: Acebrophylline, Excipients",
-      strength: "100mg",
-    },
-    {
-      id: 2,
-      name: "Acebrophylline Sustained Release Tablets",
-      composition:
-        "Each Uncoated Sustained Release Tablet Contains: Acebrophylline, Excipients. Colour: Approved Colour Used",
-      strength: "200mg",
-    },
-    {
-      id: 3,
-      name: "Aceclofenac & Paracetamol Tablets",
-      composition:
-        "Each Uncoated Tablet Contains: Aceclofenac, Paracetamol, Excipients",
-      strength: "100mg & 325mg",
-    },
-    {
-      id: 4,
-      name: "Aceclofenac & Paracetamol Tablets",
-      composition:
-        "Each Film Coated Tablet Contains: Aceclofenac, Paracetamol, Excipients. Colour: Approved Colour Used",
-      strength: "100mg & 325mg",
-    },
-    {
-      id: 5,
-      name: "Aceclofenac & Thiocolchicoside Tablets",
-      composition:
-        "Each Film Coated Tablet Contains: Aceclofenac, Thiocolchicoside, Excipients. Colour: Approved Colour Used",
-      strength: "100mg & 4mg",
-    },
-    {
-      id: 6,
-      name: "Aceclofenac Paracetamol & Serratiopeptidase Tablets",
-      composition:
-        "Each Film Coated Tablet Contains: Aceclofenac, Paracetamol, Serratiopeptidase (As 30,000 Enzymatic Units), Excipients. Colour: Approved Colour Used",
-      strength: "100mg, 325mg & 15mg",
-    },
-    {
-      id: 7,
-      name: "Aceclofenac Tablets IP 100mg",
-      composition:
-        "Each Film Coated Tablet Contains: Aceclofenac, Excipients. Colour: Approved Colour Used",
-      strength: "100mg",
-    },
-    {
-      id: 8,
-      name: "Acetylsalicylic Acid Tablets IP 150mg",
-      composition:
-        "Each Enteric Coated Tablet Contains: Acetylsalicylic Acid, Excipients. Colour: Approved Colour Used",
-      strength: "150mg",
-    },
-  ];
-  
+import { baseLink } from "../config/Apilink";
 
 const ProductTable = () => {
+  // State to hold the tablets data
+  const [tablets, setTablets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from the API
+  useEffect(() => {
+    const fetchTablets = async () => {
+      try {
+        const response = await fetch(`${baseLink}/tabletp`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setTablets(data); 
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTablets();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto py-20 text-center">
+        <p className="text-lg font-semibold">Loading products...</p>
+      </div>
+    );
+  }
+
+
   return (
     <>
-      <Breadcrumb />{" "}
+      <Breadcrumb />
       <div className="container mx-auto py-20 px-5 lg:px-28">
-        <h1 className="text-2xl border py-3 font-semibold text-center mb-1">
-          SAWA PHARMA INDIA PRIVATE LIMITED INJECTABLES
-        </h1>
+        <div className="border mb-1 flex gap-5 px-5 py-2 justify-between">
+          <h1 className="text-sm lg:text-2xl py-3 font-semibold text-center">
+            SAWA PHARMA INDIA PRIVATE LIMITED TABLETS
+          </h1>
+          <button
+            onClick={() => window.open("/pdfs/Tablets.pdf", "_blank")}
+            className="px-4 py-2 bg-white hover:bg-black hover:text-white border text-sm lg:text-lg font-bold focus:outline-none focus:ring-0"
+            download
+          >
+            View PDF
+          </button>
+        </div>
         <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-md">
-          <thead className="bg-gray-100 border-b">
-            <tr>
-              <th className="text-left p-4 text-sm font-medium text-gray-700">SR. NO.</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-700">GENERIC NAME</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-700">COMPOSITION</th>
-              <th className="text-left p-4 text-sm font-medium text-gray-700">STRENGTH</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tablets.map((tablet) => (
-              <tr key={tablet.id} className="border-b hover:bg-gray-50">
-                <td className="p-4 text-sm text-gray-700">{tablet.id}</td>
-                <td className="p-4 text-sm text-gray-700">{tablet.name}</td>
-                <td className="p-4 text-sm text-gray-700">{tablet.composition}</td>
-                <td className="p-4 text-sm text-gray-700">{tablet.strength}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          {loading ? (
+            <p className="text-center text-lg py-5">Loading...</p>
+          ) : error ? (
+            <p className="text-center text-lg text-red-500 py-5">{error}</p>
+          ) : tablets.length > 0 ? (
+            <table className="table-auto w-full border-collapse border border-gray-300 shadow-lg rounded-lg">
+              <thead className="bg-black text-white">
+                <tr>
+                  <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                    SR. NO.
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                    GENERIC NAME
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                    COMPOSITION
+                  </th>
+                  <th className="border border-gray-300 px-4 py-2 text-left font-semibold">
+                    STRENGTH
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {tablets.map((tablet, index) => (
+                  <tr
+                    key={tablet.id}
+                    className={`${
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    } hover:bg-gray-100 transition-colors`}
+                  >
+                    <td className="border border-gray-200 px-4 py-2">
+                      {tablet.id}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {tablet.name}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {tablet.composition}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {tablet.strength}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-center text-lg py-5">No data available.</p>
+          )}
         </div>
       </div>
     </>

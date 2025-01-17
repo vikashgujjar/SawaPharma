@@ -1,11 +1,107 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import { FaEnvelope, FaKitMedical, FaMapLocationDot, FaUser } from "react-icons/fa6";
 import { PiHeadsetFill } from "react-icons/pi";
 import { MdMarkEmailRead, MdMedicalServices } from "react-icons/md";
 import { LuAlarmClockCheck } from "react-icons/lu";
 import { RiMessage2Fill } from "react-icons/ri";
+import Link from 'next/link';
+import Swal from "sweetalert2";
+
 
 const ContactSection = () => {
+
+    const [formData, setFormData] = useState({
+        S_name: "",
+        S_email: "",
+        S_phone: " ",
+        product: " ",
+        message: " ",
+        userEmailsir: "shivamlugwal01@gmail.com"
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (
+            !formData.S_name.trim() ||
+            !formData.S_email.trim() ||
+            !formData.S_phone.trim() ||
+            !formData.product.trim() ||
+            !formData.message.trim()
+        ) {
+            Swal.fire({
+                title: "Incomplete Form",
+                text: "Please fill in all the required fields before submitting.",
+                icon: "warning",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#f44336",
+            });
+            return; // Stop the form submission
+        }
+
+
+        const urlEncodedData = new URLSearchParams(); ``
+
+        for (const [key, value] of Object.entries(formData)) {
+            urlEncodedData.append(key, value);
+        }
+
+        try {
+            const response = await fetch(
+                "https://sendingmail-6znv.onrender.com/sendmail",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: urlEncodedData.toString(),
+                }
+            );
+
+            if (response.ok) {
+                Swal.fire({
+                    title: "Success!",
+                    text: "Form submitted successfully!",
+                    icon: "success",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#4CAF50",
+                });
+                setFormData({
+                    S_name: "",
+                    S_email: "",
+                    S_phone: "",
+                    product: "",
+                    message: "",
+                });
+            } else {
+                Swal.fire({
+                    title: "Failed!",
+                    text: "Failed to submit the form. Please try again.",
+                    icon: "error",
+                    confirmButtonText: "Retry",
+                    confirmButtonColor: "#f44336",
+                });
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            Swal.fire({
+                title: "Error!",
+                text: "An error occurred. Please try again.",
+                icon: "error",
+                confirmButtonText: "Retry",
+                confirmButtonColor: "#f44336",
+            });
+        }
+    };
+
     return (
         <div className="contact-area px-5 lg:px-28 py-20 ">
             <div className="container">
@@ -34,8 +130,8 @@ const ContactSection = () => {
                                         </div>
                                         <div className="contact-info-content">
                                             <h5 className="text-xl font-semibold">Call Us</h5>
-                                            <p>+2 123 4565 788</p>
-                                            <p>+2 123 4565 789</p>
+                                            <p> <Link href="tel:+91 9815178030">+91 9815178030</Link></p>
+                                            <p> <Link href="tel:0172452365">0172452365</Link></p>
                                         </div>
                                     </div>
 
@@ -45,8 +141,7 @@ const ContactSection = () => {
                                         </div>
                                         <div className="contact-info-content">
                                             <h5 className="text-xl font-semibold">Email Us</h5>
-                                            <p>info@example.com</p>
-                                            <p>support@example.com</p>
+                                            <Link href="mailto:ceo@sawapharma.in">ceo@sawapharma.in</Link>
                                         </div>
                                     </div>
 
@@ -74,14 +169,17 @@ const ContactSection = () => {
                                         It is a long established fact that a reader will be distracted by the readable content of a page words which even slightly when looking at its layout.
                                     </p>
                                 </div>
-                                <form method="post" id="contact-form">
+                                <form id="contact_form" name="contact_form" onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="form-group relative">
                                             <FaUser className='absolute top-5 left-3 text-[#757f95]' />
                                             <input
+                                                id="form_name"
+                                                name="S_name"
                                                 type="text"
+                                                value={formData.S_name}
+                                                onChange={handleChange}
                                                 className="form-control outline-none w-full"
-                                                name="name"
                                                 placeholder="Your Name"
                                                 required
                                             />
@@ -89,31 +187,56 @@ const ContactSection = () => {
                                         <div className="form-group relative">
                                             <FaEnvelope className='absolute top-5 left-3 text-[#757f95]' />
                                             <input
-                                                type="email"
+                                                id="form_phone"
+                                                name="S_phone"
+                                                type="tel"
+                                                value={formData.S_phone}
+                                                onChange={handleChange}
                                                 className="form-control w-full outline-none "
-                                                name="email"
+                                                placeholder="Your Phone"
+                                                required
+                                            />
+                                        </div>
+
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                                        <div className="form-group relative">
+                                            <FaEnvelope className='absolute top-5 left-3 text-[#757f95]' />
+                                            <input
+                                                id="form_email"
+                                                name="S_email"
+                                                type="email"
+                                                value={formData.S_email}
+                                                onChange={handleChange}
+                                                className="form-control w-full outline-none "
                                                 placeholder="Your Email"
                                                 required
                                             />
                                         </div>
-                                    </div>
-                                    <div className="form-group my-6 relative">
-                                        <MdMedicalServices className='absolute top-5 left-3 text-[#757f95]' />
+                                        <div className="form-group  relative">
+                                            <MdMedicalServices className='absolute top-5 left-3 text-[#757f95]' />
 
-                                        <input
-                                            type="text"
-                                            className="form-control  w-full outline-none"
-                                            name="subject"
-                                            placeholder="Your Subject"
-                                            required
-                                        />
+                                            <input
+                                                id="form_product"
+                                                name="product"
+                                                type="text"
+                                                value={formData.product}
+                                                onChange={handleChange}
+                                                className="form-control  w-full outline-none"
+                                                placeholder="Your Products"
+                                                required
+                                            />
+                                        </div>
                                     </div>
                                     <div className="form-group mb-6 relative">
                                         <RiMessage2Fill className='absolute top-5 left-3 text-[#757f95]' />
                                         <textarea
+                                            id="form_message"
                                             name="message"
-                                            cols="30"
                                             rows="4"
+                                            value={formData.message}
+                                            onChange={handleChange}
                                             className="form-control  w-full outline-none"
                                             placeholder="Write Your Message"
                                             required

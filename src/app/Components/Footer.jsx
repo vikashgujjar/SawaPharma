@@ -5,7 +5,7 @@ import { FaEnvelope, FaLocationArrow, FaPhone } from "react-icons/fa6";
 const Footer = () => {
     return (
         <footer className="wide-40 footer bg-black text-white py-10 pt-20 px-5 lg:px-28">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-0 lg:px-4">
                 {/* FOOTER CONTENT */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* FOOTER INFO */}

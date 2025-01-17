@@ -1,7 +1,8 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import { Navigation, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
+import { FaDownload } from "react-icons/fa6";
 
 const ProductCategory = () => {
     const products = [
@@ -25,8 +26,6 @@ const ProductCategory = () => {
             title: "Dry Injection",
             downloadLink: "/pdfs/Dry Injections.pdf",
         },
-
-
     ];
 
     return (
@@ -43,37 +42,41 @@ const ProductCategory = () => {
                 }}
             ></div>
             <div className="text-center relative z-10 mx-5 lg:mx-28">
-                <h2 className="text-3xl font-bold text-white mb-4">OUR PRODUCTS CATEGORY</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">
+                    OUR PRODUCTS CATEGORY
+                </h2>
                 <p className="text-lg text-white mb-8">
-                    We are the leading manufacturer and supplier of various pharmaceutical formulations.
+                    We are the leading manufacturer and supplier of various pharmaceutical
+                    formulations.
                 </p>
                 <Swiper
                     loop={true}
                     slidesPerView={4}
                     spaceBetween={30}
-                    navigation
                     autoplay={{
                         delay: 2000,
                         disableOnInteraction: false,
                     }}
                     breakpoints={{
-                        0: { // For mobile devices
+                        0: {
+                            // For mobile devices
                             slidesPerView: 1,
                             spaceBetween: 10,
                         },
-                        768: { // For tablets and above
+                        768: {
+                            // For tablets and above
                             slidesPerView: 2,
                             spaceBetween: 20,
                         },
-                        1024: { // For desktops and larger screens
+                        1024: {
+                            // For desktops and larger screens
                             slidesPerView: 4,
                             spaceBetween: 30,
                         },
                     }}
-                    modules={[Navigation, Autoplay]}
+                    modules={[Autoplay]}
                     className="relative"
                 >
-
                     {products.map((product, index) => (
                         <SwiperSlide key={index} className="flex justify-center">
                             <div className="single-logo-container group p-4 flex flex-col items-center">
@@ -82,22 +85,27 @@ const ProductCategory = () => {
                                     alt={product.title}
                                     className="w-24 h-24 object-contain mb-3 rounded-full border-[2px] group-hover:border-white"
                                 />
-                                <h3 className="text-xl font-semibold text-[#000] group-hover:text-white">
-                                    {product.title}
-                                </h3>
-                                <button
-                                    onClick={() => {
-                                        const link = document.createElement("a");
-                                        link.href = product.downloadLink;
-                                        link.download = `${product.title}.pdf`; // Dynamic file name based on product title
-                                        document.body.appendChild(link);
-                                        link.click();
-                                        document.body.removeChild(link);
-                                    }}
-                                    className="mt-4 px-4 py-2 bg-white text-black font-medium rounded-md hover:bg-gray-300 transition"
-                                >
-                                    Download PDF
-                                </button>
+                                <div className="flex  gap-3 items-center">
+                                    <h3 className="text-xl font-semibold text-[#000] group-hover:text-white">
+                                        {product.title}
+                                    </h3>
+                                    <button
+                                        onClick={() => {
+                                            const link = document.createElement("a");
+                                            link.href = product.downloadLink;
+                                            link.download = `${product.title}.pdf`; // Dynamic file name based on product title
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                        }}
+                                        className="texfont-medium transition relative group"
+                                    >
+                                        <FaDownload className="text-[#000] group-hover:text-white" />
+                                        <span className="absolute  top-5 transform translate-x-0 mb-2 w-max rounded bg-black text-white text-[10px] px-2 py-1 hidden group-hover:block transition-opacity duration-200">
+                                            Download PDF
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
                         </SwiperSlide>
                     ))}
