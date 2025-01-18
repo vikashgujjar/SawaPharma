@@ -7,6 +7,8 @@ import Footer from "./Components/Footer";
 import Testimonials from "./Components/Testimonial";
 import ContactSection from "./Components/ContactSection";
 import Gallery from "./Components/OurGallary";
+import Companies from "./Components/Companies";
+
 
 const page = () => {
   return (
@@ -18,6 +20,7 @@ const page = () => {
       <ContactSection />
       <Testimonials />
       <Gallery />
+      <Companies />
     
     </>
   );

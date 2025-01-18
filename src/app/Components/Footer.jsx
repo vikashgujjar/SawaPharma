@@ -61,7 +61,7 @@ const Footer = () => {
                         <ul className="space-y-2 ">
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/injectables"
                                     className=""
                                 >
                                      Injectables
@@ -69,7 +69,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/tablets"
                                     className=""
                                 >
                                      Tablets
@@ -77,18 +77,18 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/liquid-injection"
                                     className=""
                                 >
-                                 Liquid Injectables
+                                 Liquid Injections
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/dry-injection"
                                     className=""
                                 >
-                                     Dry Injectables
+                                     Dry Injections
                                 </Link>
                             </li>
                            
@@ -101,7 +101,7 @@ const Footer = () => {
                         <ul className="space-y-2">
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/company-profile"
                                     className=""
                                 >
                                     Company Profile
@@ -109,24 +109,16 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/board-of-members"
                                     className=""
                                 >
                                     Board of Members
                                 </Link>
                             </li>
+                           
                             <li>
                                 <Link
-                                    href="#"
-                                    className=""
-                                >
-                                    Our Presence
-
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="#"
+                                    href="/marekting"
                                     className=""
                                 >
                                     Marketing
@@ -135,7 +127,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    href="#"
+                                    href="/contact-us"
                                     className=""
                                 >
                                     Contact Us

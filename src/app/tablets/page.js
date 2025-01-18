@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
 import { baseLink } from "../config/Apilink";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProductTable = () => {
   // State to hold the tablets data
@@ -18,7 +20,7 @@ const ProductTable = () => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        setTablets(data); 
+        setTablets(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -28,15 +30,6 @@ const ProductTable = () => {
 
     fetchTablets();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto py-20 text-center">
-        <p className="text-lg font-semibold">Loading products...</p>
-      </div>
-    );
-  }
-
 
   return (
     <>
@@ -55,11 +48,9 @@ const ProductTable = () => {
           </button>
         </div>
         <div className="overflow-x-auto">
-          {loading ? (
-            <p className="text-center text-lg py-5">Loading...</p>
-          ) : error ? (
+          {error ? (
             <p className="text-center text-lg text-red-500 py-5">{error}</p>
-          ) : tablets.length > 0 ? (
+          ) : (
             <table className="table-auto w-full border-collapse border border-gray-300 shadow-lg rounded-lg">
               <thead className="bg-black text-white">
                 <tr>
@@ -78,31 +69,51 @@ const ProductTable = () => {
                 </tr>
               </thead>
               <tbody>
-                {tablets.map((tablet, index) => (
-                  <tr
-                    key={tablet.id}
-                    className={`${
-                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    } hover:bg-gray-100 transition-colors`}
-                  >
-                    <td className="border border-gray-200 px-4 py-2">
-                      {tablet.id}
-                    </td>
-                    <td className="border border-gray-200 px-4 py-2">
-                      {tablet.name}
-                    </td>
-                    <td className="border border-gray-200 px-4 py-2">
-                      {tablet.composition}
-                    </td>
-                    <td className="border border-gray-200 px-4 py-2">
-                      {tablet.strength}
-                    </td>
-                  </tr>
-                ))}
+                {loading
+                  ? Array.from({ length: 5 }).map((_, index) => (
+                      <tr
+                        key={index}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        }`}
+                      >
+                        <td className="border border-gray-200 px-4 py-2">
+                          <Skeleton />
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          <Skeleton />
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          <Skeleton />
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    ))
+                  : tablets.map((tablet, index) => (
+                      <tr
+                        key={tablet.id}
+                        className={`${
+                          index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                        } hover:bg-gray-100 transition-colors`}
+                      >
+                        <td className="border border-gray-200 px-4 py-2">
+                          {tablet.id}
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          {tablet.name}
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          {tablet.composition}
+                        </td>
+                        <td className="border border-gray-200 px-4 py-2">
+                          {tablet.strength}
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
-          ) : (
-            <p className="text-center text-lg py-5">No data available.</p>
           )}
         </div>
       </div>

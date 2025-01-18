@@ -101,9 +101,7 @@ const ProductCategory = () => {
                                         className="texfont-medium transition relative group"
                                     >
                                         <FaDownload className="text-[#000] group-hover:text-white" />
-                                        <span className="absolute  top-5 transform translate-x-0 mb-2 w-max rounded bg-black text-white text-[10px] px-2 py-1 hidden group-hover:block transition-opacity duration-200">
-                                            Download PDF
-                                        </span>
+                                       
                                     </button>
                                 </div>
                             </div>

@@ -39,18 +39,12 @@ const NavBar = () => {
                 { label: 'DRY Injections', href: '/dry-injection' },
             ],
         },
-        {
-            label: 'Manufacturing',
-            href: '/manufacturing',
-        },
-        {
-            label: 'R&D',
-            href: '',
-        },
-        {
-            label: 'Blog',
-            href: '/blog',
-        },
+      
+       
+        // {
+        //     label: 'Blog',
+        //     href: '/blog',
+        // },
         {
             label: 'Contact Us',
             href: '/contact-us',

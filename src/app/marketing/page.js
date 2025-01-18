@@ -7,8 +7,8 @@ const page = () => {
     <>
       <Breadcrumb />
       <div className="mainContainer blog-page bg-gray-100 py-20 px-5 lg:px-28">
-        <div className="flex gap-5 mx-auto ">
-          <div className="w-3/4">
+        <div className="flex flex-col lg:flex-row  gap-5 mx-auto ">
+          <div className="w-full lg:w-3/4">
             <h3 className="text-4xl font-medium">Marketing</h3>
             <p className="my-2">
               Providing local competence and networks in all major
@@ -16,7 +16,7 @@ const page = () => {
               in various countries.
             </p>
             <h3 className="text-2xl font-semibold mb-2">List of Countries:</h3>
-            <p className="text-justify">
+            <p className="text-justify text-lg">
               Benin, Bhutan, Bolivia, Botswana, Cameroon, Chile, Combodia,
               Congo, Costa Rica, El-Salvador, Ethiopia, Fiji, Ghana, Guatemala,
               Guyana, Honduras, Hong Kong, Jamaica, Kenya, Lebanon, Madagascar,
@@ -29,7 +29,7 @@ const page = () => {
 
           <div
             id="text-3"
-            className="widget w-1/4 widget_text p-6 "
+            className="widget w-full lg:w-1/4 widget_text p-0 lg:p-6 "
           >
             <h2 className="widget-title text-xl font-bold text-gray-800 border-b-2 pb-2 mb-4">
               Find Us
@@ -37,17 +37,15 @@ const page = () => {
             <div className="textwidget space-y-4">
               <div>
                 <p className="font-semibold text-gray-700">Address</p>
-                <p className="text-gray-600">GOGA HEALTHCARE</p>
+                <p className="text-gray-600 font-semibold">SAWA PHARMA INDIA Pvt Lmt</p>
                 <p className="text-gray-600">
-                  No.1210, RAJMAHAL MALL, DINDOLI, SURAT – 394210, GUJARAT,
-                  INDIA.
+                SCO/F 21, 1st Floor, Sector 5, Swastik Vihar, Mansa Devi Complex, Haryana - 134114 (India)
                 </p>
               </div>
               <div>
                 <p className="font-semibold text-gray-700">Email</p>
                 <p className="text-gray-600">
-                  sales@gogahealthcare.com <br />
-                  gogahealthcare@gmail.com
+                ceo@sawapharma.in
                 </p>
               </div>
               <div>

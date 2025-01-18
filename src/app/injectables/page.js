@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
 import { baseLink } from "../config/Apilink";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
@@ -9,7 +11,6 @@ const ProductTable = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-   
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${baseLink}/injectable`);
@@ -18,31 +19,15 @@ const ProductTable = () => {
         }
         const data = await response.json();
         setProducts(data);
-        setLoading(false);
       } catch (err) {
         setError(err.message);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto py-20 text-center">
-        <p className="text-lg font-semibold">Loading products...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto py-20 text-center text-red-500">
-        <p className="text-lg font-semibold">Error: {error}</p>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -83,30 +68,67 @@ const ProductTable = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => (
-                <tr
-                  key={product.id}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100 transition-colors`}
-                >
-                  <td className="border border-gray-200 px-4 py-2">
-                    {product.id}
-                  </td>
-                  <td className="border border-gray-200 px-4 py-2">
-                    {product.name}
-                  </td>
-                  <td className="border border-gray-200 px-4 py-2">
-                    {product.strength}
-                  </td>
-                  <td className="border border-gray-200 px-4 py-2">
-                    {product.packing}
-                  </td>
-                  <td className="border border-gray-200 px-4 py-2">
-                    {product.shelfLife}
+              {loading ? (
+                Array.from({ length: 5 }).map((_, index) => (
+                  <tr key={index}>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <Skeleton />
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <Skeleton />
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <Skeleton />
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <Skeleton />
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      <Skeleton />
+                    </td>
+                  </tr>
+                ))
+              ) : error ? (
+                <tr>
+                  <td
+                    colSpan="5"
+                    className="text-center text-lg text-red-500 py-5"
+                  >
+                    {error}
                   </td>
                 </tr>
-              ))}
+              ) : products.length > 0 ? (
+                products.map((product, index) => (
+                  <tr
+                    key={product.id}
+                    className={`${
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    } hover:bg-gray-100 transition-colors`}
+                  >
+                    <td className="border border-gray-200 px-4 py-2">
+                      {product.id}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {product.name}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {product.strength}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {product.packing}
+                    </td>
+                    <td className="border border-gray-200 px-4 py-2">
+                      {product.shelfLife}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center text-lg py-5">
+                    No data available.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

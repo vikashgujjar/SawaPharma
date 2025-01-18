@@ -37,7 +37,7 @@ const Gallery = () => {
                   className="h-full w-ful object-cover"
                 />
                 <Link
-                  href={item.imgSrc}
+                  href=""
                   className="popup-img gallery-link relative"
                 >
                   <FaPlus className='absolute text-[#03a297] top-3.5 left-3.5'/>
