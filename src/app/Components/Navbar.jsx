@@ -1,15 +1,36 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from "react";
 import Link from 'next/link';
 import Image from 'next/image';
+import { baseLink } from "../config/Apilink";
 
 const NavBar = () => {
     const [dropdownOpen, setDropdownOpen] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [navColor, setNavColor] = useState("#ffffff");
 
     const handleToggle = (index) => {
         setDropdownOpen(dropdownOpen === index ? null : index);
     };
+
+
+    useEffect(() => {
+        const fetchNavColor = async () => {
+            try {
+                const response = await fetch(`${baseLink}/layout`);
+                const result = await response.json();
+
+                if (result?.navcolor) {
+                    setNavColor(result.navcolor);
+                }
+            } catch (error) {
+                console.error("Error fetching navbar color:", error);
+            }
+        };
+
+        fetchNavColor();
+    }, []);
+
 
     const menuItems = [
         {
@@ -21,8 +42,9 @@ const NavBar = () => {
             href: '',
             subMenu: [
                 { label: 'Company Profile', href: '/company-profile' },
-                { label: 'Board of Members', href: '/board-of-members' },
+
                 { label: 'Our Presence ', href: '/our-presence' },
+                { label: 'Our Gallery ', href: '/our-gallery' },
             ],
         },
         {
@@ -33,18 +55,17 @@ const NavBar = () => {
             label: 'Products',
             href: '',
             subMenu: [
-                { label: 'INJECTABLES', href: '/injectables' },
+
                 { label: 'TABLETS', href: '/tablets' },
                 { label: 'LIQUID Injections ', href: '/liquid-injection' },
                 { label: 'DRY Injections', href: '/dry-injection' },
+                { label: 'Capsules', href: '/capsules' },
+                { label: 'SYRUP', href: '/syrup' },
             ],
         },
-      
-       
-        // {
-        //     label: 'Blog',
-        //     href: '/blog',
-        // },
+
+
+
         {
             label: 'Contact Us',
             href: '/contact-us',
@@ -52,24 +73,31 @@ const NavBar = () => {
     ];
 
     return (
-        <header className="mainHeader bg-[#000] z-30 py-2 sticky top-0">
-            <div className="px-5 lg:px-40 mx-auto">
+        <header
+            className="mainHeader z-30 py-2 border-b sticky top-0"
+            style={{ backgroundColor: navColor || "#ffffff" }}
+        >
+            <div className="px-5 lg:px-28 mx-auto">
                 <div className="flex items-center justify-between">
-                    {/* Logo */}
-                    <div className="logo">
-                        <Link href="/" className="text-xl font-bold text-[#03a297]">
-                            <Image
-                                src="/images/logo/logo.png"
-                                className="w-auto h-20"
-                                alt=""
-                                width={800}
-                                height={800}
-                            />
-                        </Link>
-                    </div>
+
+
+                    <Link href="/" className=" logo flex items-center gap-4">
+                        <Image
+                            src="/images/logo/logo.webp"
+                            className="w-auto h-20"
+                            alt=""
+                            width={800}
+                            height={800}
+                            loading="lazy"
+                        />
+
+                        <h1 className="font-semibold text-[#3a3a3a] text-3xl  wow fadeInUp pt-lg-4">
+                            Sawa Pharma (India) Pvt. Ltd.
+                        </h1>
+                    </Link>
 
                     <div
-                        className="lg:hidden text-white text-2xl cursor-pointer"
+                        className="lg:hidden text-2xl cursor-pointer"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         <i className={`fa ${mobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
@@ -77,7 +105,7 @@ const NavBar = () => {
 
 
                     <nav
-                        className={`absolute lg:static top-16 left-0 w-full lg:w-auto bg-black lg:bg-transparent lg:flex transition-transform duration-300 ${mobileMenuOpen ? 'block' : 'hidden'
+                        className={`absolute lg:static top-24 left-0 w-full lg:w-auto bg-white lg:bg-transparent lg:flex transition-transform duration-300 ${mobileMenuOpen ? 'block' : 'hidden'
                             }`}
                     >
                         <ul className="flex flex-col lg:flex-row gap-4 lg:gap-8 p-5 lg:p-0">
@@ -86,13 +114,14 @@ const NavBar = () => {
                                     <div className="flex gap-1 items-center">
                                         <Link
                                             href={item.href}
-                                            className="font-medium text-sm text-white uppercase py-2 lg:py-6 no-underline block"
+                                            className="font-semibold text-base uppercase py-2 lg:py-6 no-underline block"
+                                            onClick={() => setMobileMenuOpen(false)}
                                         >
                                             {item.label}
                                         </Link>
                                         {item.subMenu && (
                                             <span
-                                                className="text-white cursor-pointer"
+                                                className=" cursor-pointer"
                                                 onClick={() => handleToggle(index)}
                                             >
                                                 <i className="fa fa-angle-down ml-2.5"></i>
@@ -101,7 +130,7 @@ const NavBar = () => {
                                     </div>
                                     {item.subMenu && (
                                         <div
-                                            className={`lg:absolute lg:left-0 lg:top-16 bg-white px-4 py-2 w-full lg:w-64 ${dropdownOpen === index
+                                            className={`lg:absolute lg:left-0  lg:top-16 border  bg-white px-4 py-2 w-full lg:w-[300px] ${dropdownOpen === index
                                                 ? 'block'
                                                 : 'hidden'
                                                 } lg:group-hover:block`}
@@ -111,7 +140,8 @@ const NavBar = () => {
                                                     <li key={subIndex} className="py-2">
                                                         <Link
                                                             href={subItem.href}
-                                                            className="font-medium text-sm text-black uppercase no-underline block"
+                                                            className="text-base font-semibold text-black uppercase no-underline block"
+                                                            onClick={() => setMobileMenuOpen(false)} // Close menu on sub-menu click
                                                         >
                                                             {subItem.label}
                                                         </Link>
@@ -120,19 +150,26 @@ const NavBar = () => {
                                             </ul>
                                         </div>
                                     )}
-
                                 </li>
                             ))}
                         </ul>
                     </nav>
 
-                    <div className="hidden lg:block">
-                        <Link
-                            href="#"
-                        >
-                            <Image src="/images/whatsappicon.png" alt='whatsapicon' className='w-12 h-auto rounded-full' width={900} height={900}></Image>
+
+                    {/* <div className="hidden lg:flex items-center space-x-3">
+                        <Link href="https://wa.me/9875939879" target='blank' className="">
+                            <Image
+                                src="/images/whatsappicon.webp"
+                                alt="whatsapp icon"
+                                className="w-12 h-auto rounded-full"
+                                width={900}
+                                height={900}
+                                loading="lazy"
+                            />
                         </Link>
-                    </div>
+                    </div> */}
+
+
                 </div>
             </div>
         </header>

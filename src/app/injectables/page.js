@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
-import { baseLink } from "../config/Apilink";
+import { baseLink, storageLink } from "../config/Apilink";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -29,6 +29,23 @@ const ProductTable = () => {
     fetchProducts();
   }, []);
 
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    fetch(`${baseLink}/prcate`)
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const openPdf = (pdfUrl) => {
+    if (pdfUrl) {
+      window.open(`${storageLink}/${pdfUrl}`, "_blank");
+    } else {
+      alert("No PDF available for this product.");
+    }
+  };
+
   return (
     <>
       <Breadcrumb />
@@ -37,13 +54,18 @@ const ProductTable = () => {
           <h1 className="text-sm lg:text-2xl py-3 font-semibold text-center">
             SAWA PHARMA INDIA PRIVATE LIMITED INJECTABLES
           </h1>
-          <button
-            onClick={() => window.open("/pdfs/Cefa Injectables.pdf", "_blank")}
-            className="px-4 py-2 bg-white hover:bg-black hover:text-white border text-sm lg:text-lg font-bold focus:outline-none focus:ring-0"
-            download
-          >
-            View PDF
-          </button>
+
+          {product.map(
+            (product) =>
+              product.id === 1 && (
+                <button
+                  className="px-4 py-2 bg-white hover:bg-black hover:text-white border text-sm lg:text-lg font-bold focus:outline-none focus:ring-0"
+                  onClick={() => openPdf(product.pdf_for_model)}
+                >
+                  Open PDF
+                </button>
+              )
+          )}
         </div>
 
         <div className="overflow-x-auto">
@@ -106,7 +128,7 @@ const ProductTable = () => {
                     } hover:bg-gray-100 transition-colors`}
                   >
                     <td className="border border-gray-200 px-4 py-2">
-                      {product.id}
+                    {index + 1}
                     </td>
                     <td className="border border-gray-200 px-4 py-2">
                       {product.name}

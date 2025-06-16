@@ -12,10 +12,9 @@ const Banner = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch banner data from the backend
     const fetchBanners = async () => {
       try {
-        const response = await fetch(`${baseLink}/banner`); // Replace with your API endpoint
+        const response = await fetch(`${baseLink}/banner`);
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
         }
@@ -33,15 +32,16 @@ const Banner = () => {
 
   return (
     <section className="relative">
-      <Swiper
-        modules={[Autoplay]}
-        autoplay={{ delay: 1500, disableOnInteraction: false }}
-        loop={true}
-        className="innerbanner"
-        style={{ height: "400px" }}
-      >
-        {isLoading
-          ? Array.from({ length: 3 }).map((_, index) => (
+      <div className="relative h-full">
+        <Swiper
+          modules={[Autoplay]}
+          autoplay={{ delay: 3500, disableOnInteraction: false }}
+          loop={true}
+          className="innerbanner"
+          style={{ height: "400px" }}
+        >
+          {isLoading
+            ? Array.from({ length: 3 }).map((_, index) => (
               <SwiperSlide key={index}>
                 <div className="relative h-full">
                   <Skeleton
@@ -51,7 +51,7 @@ const Banner = () => {
                 </div>
               </SwiperSlide>
             ))
-          : banners.map((banner, index) => (
+            : banners.map((banner, index) => (
               <SwiperSlide key={index}>
                 <div
                   className="relative h-full"
@@ -62,46 +62,47 @@ const Banner = () => {
                     height: "400px",
                   }}
                 >
-                  <div
+                  {/* <div
                     className="absolute inset-0 bg-black bg-opacity-50"
                     style={{
                       mixBlendMode: "multiply",
                     }}
-                  ></div>
-                  <div className="w-full relative z-1">
-                    <h1 className="text-center font-semibold text-4xl pt-10 lg:pt-28 text-white wow fadeInUp pt-lg-4">
-                      {banner.title}
-                    </h1>
-                    <h2
-                      className="text-white fz16 mt-4 pb-4 text-center wow fadeInUp"
-                      data-wow-delay=".5s"
-                    >
-                      {banner.text}
-                    </h2>
-                    <div
-                      className="hero-btn animate-fadeInUp"
-                      style={{ animationDelay: "1s" }}
-                    >
-                      <Link
-                        href="/contact-us"
-                        className="theme-btn flex items-center"
-                      >
-                        Contact Us
-                        <i className="fas fa-arrow-right ml-2"></i>
-                      </Link>
-                      <Link
-                        href="#learn"
-                        className="theme-btn theme-btn2 flex items-center"
-                      >
-                        Learn More
-                        <i className="fas fa-arrow-right ml-2"></i>
-                      </Link>
-                    </div>
-                  </div>
+                  ></div> */}
                 </div>
               </SwiperSlide>
             ))}
-      </Swiper>
+        </Swiper>
+      </div>
+
+      {/* Text and Button Section (not in the Swiper) */}
+      <div className="w-full  absolute top-5 lg:top-0  z-20 ">
+        <div className="w-full lg:w-1/2 px-28">
+          {banners.length > 0 && !isLoading && (
+            <>
+             
+              {/* <p
+                className="text-white  fz16  mt-4 pb-4 wow fadeInUp"
+                data-wow-delay=".5s"
+              >
+                {banners[0].text}
+              </p>
+              <div
+                className="hero-btn animate-fadeInUp"
+                style={{ animationDelay: "1s" }}
+              >
+                <Link href="/contact-us" className="theme-btn flex items-center">
+                  Contact Us
+                  <i className="fas fa-arrow-right ml-2"></i>
+                </Link>
+                <Link href="#learn" className="theme-btn theme-btn2 flex items-center">
+                  Learn More
+                  <i className="fas fa-arrow-right ml-2"></i>
+                </Link>
+              </div> */}
+            </>
+          )}
+        </div>
+      </div>
     </section>
   );
 };

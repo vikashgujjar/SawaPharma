@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
-import { baseLink } from "../config/Apilink";
+import { baseLink, storageLink } from "../config/Apilink";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -31,6 +31,24 @@ const ProductTable = () => {
     fetchTablets();
   }, []);
 
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    fetch(`${baseLink}/prcate`)
+      .then((response) => response.json())
+      .then((data) => setProduct(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const openPdf = (pdfUrl) => {
+    // Open the PDF link in a new tab
+    if (pdfUrl) {
+      window.open(`${storageLink}/${pdfUrl}`, "_blank");
+    } else {
+      alert("No PDF available for this product.");
+    }
+  };
+
   return (
     <>
       <Breadcrumb />
@@ -39,13 +57,17 @@ const ProductTable = () => {
           <h1 className="text-sm lg:text-2xl py-3 font-semibold text-center">
             SAWA PHARMA INDIA PRIVATE LIMITED TABLETS
           </h1>
-          <button
-            onClick={() => window.open("/pdfs/Tablets.pdf", "_blank")}
-            className="px-4 py-2 bg-white hover:bg-black hover:text-white border text-sm lg:text-lg font-bold focus:outline-none focus:ring-0"
-            download
-          >
-            View PDF
-          </button>
+          {product.map(
+            (product) =>
+              product.id === 2 && (
+                <button
+                  className="px-4 py-2 bg-white hover:bg-black hover:text-white border text-sm lg:text-lg font-bold focus:outline-none focus:ring-0"
+                  onClick={() => openPdf(product.pdf_for_model)}
+                >
+                  Open PDF
+                </button>
+              )
+          )}
         </div>
         <div className="overflow-x-auto">
           {error ? (
@@ -99,7 +121,7 @@ const ProductTable = () => {
                         } hover:bg-gray-100 transition-colors`}
                       >
                         <td className="border border-gray-200 px-4 py-2">
-                          {tablet.id}
+                          {index + 1}
                         </td>
                         <td className="border border-gray-200 px-4 py-2">
                           {tablet.name}

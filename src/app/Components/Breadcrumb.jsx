@@ -10,7 +10,7 @@ const Breadcrumb = () => {
         .filter(Boolean)
         .map((segment) =>
             segment
-                .replace(/-/g, ' ') 
+                .replace(/-/g, ' ')
                 .replace(/\b\w/g, (char) => char.toUpperCase())
         )
         .join(' / ');
@@ -21,7 +21,7 @@ const Breadcrumb = () => {
             <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                    backgroundImage: "url('/images/banner/breadcrumb.jpeg')",
+                    backgroundImage: "url('/images/banner/breadcrumb.webp')",
                 }}
             ></div>
             {/* Overlay */}
