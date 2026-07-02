@@ -1,172 +1,169 @@
 "use client";
-
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { ArrowUpRight } from "lucide-react";
 import { baseLink, storageLink } from "../config/Apilink";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
-const Services = () => {
+const ServicesGrid = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sectionData, setSectionData] = useState([]);
   const [error, setError] = useState(null);
-  const [formattedHtml, setFormattedHtml] = useState("");
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const fetchSectionData = async () => {
-      try {
-        const response = await fetch(`${baseLink}/abouts`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch section data");
-        }
-        const data = await response.json();
-        setSectionData(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSectionData();
-  }, []);
-
-  useEffect(() => {
-    if (sectionData.length > 0) {
-      const htmlString = sectionData
-        .map((item) => {
-          if (item.parag2) {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(item.parag2, "text/html");
-            const h2 = doc.querySelector("h2");
-            if (h2) h2.classList.add("texl-lg", "lg:text-2xl", "font-semibold", "mt-8");
-            const p = doc.querySelector("p");
-            if (p) p.classList.add("text-base", "text-gray-700", "text-justify", "animate-fadeInUp");
-            return doc.body.innerHTML;
-          }
-          return "";
-        })
-        .join("");
-
-      setFormattedHtml(htmlString);
-    }
-  }, [sectionData]);
-
-  useEffect(() => {
-    const fetchServices = async () => {
+    let cancelled = false;
+    (async () => {
       try {
         const response = await fetch(`${baseLink}/service`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch services");
-        }
+        if (!response.ok) throw new Error("Failed to fetch services");
         const data = await response.json();
-        setServices(data);
+        if (!cancelled) setServices(data);
       } catch (err) {
-        setError(err.message);
+        if (!cancelled) setError(err.message);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    };
-
-    fetchServices();
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   return (
-    <>
-      <section className="service bg-primary px-5 lg:px-28 my-20 pb-0 bg-cover bg-center">
-        <div className="mx-auto px-4">
-          <div className="text-center">
-            <span className="inline-block text-[0.875rem] leading-[1.375rem] font-semibold tracking-wider uppercase text-primary bg-[#d3e9fb] px-2 py-1 rounded-[3px] mb-2">
-              Our Services
-            </span>
-            <h5 className="text-2xl font-bold mb-5">What Facilities We Provided</h5>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {loading
-              ? Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="bg-white shadow-lg rounded-none overflow-hidden">
-                  <div className="relative">
-                    <Skeleton className="w-full h-64" />
-                  </div>
-                  <div className="p-6">
-                    <Skeleton width="70%" />
-                    <Skeleton width="90%" className="my-2" />
-                    <Skeleton width="50%" />
-                  </div>
-                </div>
-              ))
-              : error
-                ? <p className="text-center text-lg text-red-500 py-5">{error}</p>
-                : services.map((service) => (
-                  <div key={service.id} className="bg-white shadow-lg rounded-none overflow-hidden">
-                    <div className="relative">
-                      <Image
-                        src={`${storageLink}/${service.image}`}
-                        alt={service?.title}
-                        width={500}
-                        height={300}
-                        loading="lazy"
-                        className="w-full h-64 object-cover"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h5 className="text-lg font-semibold mb-2">{service.title}</h5>
-                      <p className="text-gray-600 mb-4">{service.text}</p>
-                      <Link
-                        href={`/${service.link}`}
-                        className="text-primary hover:text-blue-400 font-medium hover:underline inline-flex items-center"
-                      >
-                        Read More <FaPlus className="text-sm ml-2" />
-                      </Link>
-                    </div>
-                  </div>
-                ))}
-          </div>
+    <section className="w-full bg-white py-16 sm:py-24">
+      <div className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <p className="font-poppins text-[#00A86B] text-[11px] font-semibold tracking-[0.28em] uppercase mb-3">
+            Our Services
+          </p>
+          <h2 className="font-poppins font-bold text-[#0B3B91] leading-tight text-[1.9rem] sm:text-[2.4rem]">
+            What Facilities We Provide.
+          </h2>
         </div>
-      </section>
 
-      <section className="common-section road-ahead py-14 px-5 lg:px-28 bg-gray-100" id="learn">
-        <div className="container mx-auto">
-          {sectionData.map((item) => (
-            <div key={item.id}>
+        {error && (
+          <p className="text-center font-inter text-red-500 text-sm py-8">
+            Couldn't load services right now — please try again shortly.
+          </p>
+        )}
 
-              <div className="flex flex-col lg:flex-row items-center lg:space-x-10">
+        {loading && !error && (
+          <div className="flex gap-2 max-w-6xl mx-auto h-[420px]">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="flex-1 rounded-2xl bg-[#EAF4FF] animate-pulse" />
+            ))}
+          </div>
+        )}
 
-                <div className="w-full lg:w-7/12">
-                  <h2 className="text-uppercase text-[#03a297] text-xl md:text-4xl font-semibold mb-5 animate-fadeInUp">
-                    {item.i_heading}
-                  </h2>
-                  <p className="text-base text-gray-700 text-justify animate-fadeInUp">
-                    {item.parag}
-                  </p>
+        {/* ── Desktop: fanned panel row ── */}
+        {!loading && !error && services.length > 0 && (
+          <div className="hidden lg:flex gap-2.5 max-w-6xl mx-auto h-[440px]">
+            {services.map((s, i) => {
+              const isActive = i === active;
+              return (
+                <button
+                  key={s.id}
+                  onMouseEnter={() => setActive(i)}
+                  onFocus={() => setActive(i)}
+                  onClick={() => setActive(i)}
+                  className="relative rounded-2xl overflow-hidden text-left transition-[flex-grow] duration-500 ease-in-out"
+                  style={{ flexGrow: isActive ? 6 : 1, flexBasis: 0, minWidth: isActive ? 0 : 64 }}
+                >
+                  <Image
+                    src={`${storageLink}/${s.image}`}
+                    alt={s.title || "Sawa Pharma service"}
+                    fill
+                    sizes="(max-width: 1280px) 50vw, 20vw"
+                    className="object-cover"
+                  />
                   <div
-                    className="text-base text-gray-700 text-justify animate-fadeInUp"
-                    dangerouslySetInnerHTML={{ __html: formattedHtml || item.parag2 }}
-                  ></div>
-                </div>
+                    className={`absolute inset-0 transition-colors duration-500
+                      ${isActive
+                        ? "bg-gradient-to-t from-[#040d20]/90 via-[#040d20]/25 to-[#040d20]/10"
+                        : "bg-[#040d20]/55 hover:bg-[#040d20]/35"}`}
+                  />
 
-                <div className="w-full lg:w-5/12">
-                  <figure className="animate-fadeInUp">
-                    <Image
-                      src={`${storageLink}/${item.img}`}
-                      alt={item.i_heading}
-                      className="rounded-lg p-4 w-full h-full"
-                      width={500}
-                      height={400}
-                      loading="lazy"
-                    />
-                  </figure>
+                  {/* number badge, always visible */}
+                  <span className="absolute top-4 left-4 font-mono text-[#00A86B] text-[11px] tracking-wider z-10">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  {/* expanded content */}
+                  <div
+                    className={`absolute inset-x-0 bottom-0 p-6 transition-all duration-300
+                      ${isActive ? "opacity-100 translate-y-0 delay-150" : "opacity-0 translate-y-3 pointer-events-none"}`}
+                  >
+                    <h3 className="font-poppins font-bold text-white text-[1.5rem] xl:text-[1.7rem] leading-tight mb-2 max-w-md">
+                      {s.title}
+                    </h3>
+                    <p className="font-inter text-white/65 text-[13px] leading-relaxed max-w-sm mb-4 line-clamp-2">
+                      {s.text}
+                    </p>
+                    <Link
+                      href={`/${s.link}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center gap-1.5 font-poppins font-semibold text-white text-[12.5px]
+                        bg-[#00A86B] rounded-lg px-4 py-2 hover:bg-[#008f5a] hover:gap-2.5 transition-all duration-200"
+                    >
+                      Read More <ArrowUpRight size={14} />
+                    </Link>
+                  </div>
+
+                  {/* collapsed label — vertical text */}
+                  <div
+                    className={`absolute inset-0 flex items-end justify-center pb-6 transition-opacity duration-300
+                      ${isActive ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+                  >
+                    <span
+                      className="font-poppins font-semibold text-white text-[12.5px] whitespace-nowrap"
+                      style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
+                    >
+                      {s.title}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* ── Mobile / tablet: simple stacked cards (fanning doesn't translate to touch) ── */}
+        {!loading && !error && services.length > 0 && (
+          <div className="lg:hidden flex flex-col gap-4 max-w-xl mx-auto">
+            {services.map((s, i) => (
+              <div key={s.id} className="relative h-56 rounded-2xl overflow-hidden">
+                <Image
+                  src={`${storageLink}/${s.image}`}
+                  alt={s.title || "Sawa Pharma service"}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#040d20]/90 via-[#040d20]/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5">
+                  <span className="font-mono text-[#00A86B] text-[10.5px] tracking-wider">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="font-poppins font-bold text-white text-[1.2rem] leading-tight mt-1 mb-1.5">
+                    {s.title}
+                  </h3>
+                  <p className="font-inter text-white/65 text-[12.5px] leading-relaxed mb-3 line-clamp-2">
+                    {s.text}
+                  </p>
+                  <Link
+                    href={`/${s.link}`}
+                    className="inline-flex items-center gap-1.5 font-poppins font-semibold text-white text-[12px]
+                      bg-[#00A86B] rounded-lg px-3.5 py-1.5"
+                  >
+                    Read More <ArrowUpRight size={13} />
+                  </Link>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    </>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 
-export default Services;
+export default ServicesGrid;

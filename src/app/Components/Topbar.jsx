@@ -3,91 +3,149 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { baseLink } from "../config/Apilink";
 
+const allBadges = [
+  { icon: "fas fa-certificate",  label: "WHO-GMP Certified"      },
+  { icon: "fas fa-flag",         label: "Made in India"           },
+  { icon: "fas fa-globe",        label: "Export Ready"            },
+  // { icon: "fas fa-shield-alt",   label: "ISO Quality Systems"     },
+  // { icon: "fas fa-check-double", label: "Regulatory Compliance"   },
+];
+
 const Topbar = () => {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${baseLink}/layout`);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching topbar data:", error);
-      } finally {
-        setLoading(false);
+        const res  = await fetch(`${baseLink}/layout`);
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        console.error("Topbar fetch error:", e);
       }
     };
-
     fetchData();
   }, []);
 
-  return (
-    <div id="sp-top-bar" className="hidden lg:block bg-[#6e7881] h-8 py-2 border-b px-28">
-      <div className="flex flex-wrap items-center justify-between">
-        
-    
-        {/* <div id="sp-top1" className="text-center md:text-left md:w-2/3 lg:w-7/12">
-          <ul className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-white">
-            {loading ? (
-              <>
-               
-                <li className="h-4 w-32 bg-gray-400 animate-pulse rounded"></li>
-                <li className="h-4 w-32 bg-gray-400 animate-pulse rounded"></li>
-                <li className="h-4 w-40 bg-gray-400 animate-pulse rounded"></li>
-              </>
-            ) : (
-              <>
-                <li className="flex items-center gap-2">
-                  <span className="fas fa-phone-alt" aria-hidden="true"></span>
-                  <Link href={`tel:${data?.number1}`} className="hover:underline">
-                    {data?.number1}
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="fas fa-phone-alt" aria-hidden="true"></span>
-                  <Link href={`tel:${data?.number2}`} className="hover:underline">
-                    {data?.number2}
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="far fa-envelope" aria-hidden="true"></span>
-                  <Link href={`mailto:${data?.email}`} className="hover:underline">
-                    {data?.email}
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
-        </div> */}
+  const ContactLinks = () => (
+    <div className="flex items-center gap-3 xl:gap-5 shrink-0">
+      {data?.number1 && (
+        <Link
+          href={`tel:${data.number1}`}
+          className="flex items-center gap-1.5 text-[11px] text-white/90 font-inter font-medium hover:text-[#00A86B] transition-colors group"
+        >
+          <span className="w-5 h-5 xl:w-6 xl:h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00A86B]/20 transition-colors shrink-0">
+            <i className="fas fa-phone-alt text-[#00A86B] text-[8px] xl:text-[9px]"></i>
+          </span>
+          <span className="hidden md:inline">{data.number1}</span>
+        </Link>
+      )}
+      {data?.email && (
+        <Link
+          href={`mailto:${data.email}`}
+          className="flex items-center gap-1.5 text-[11px] text-white/90 font-inter font-medium hover:text-[#00A86B] transition-colors group"
+        >
+          <span className="w-5 h-5 xl:w-6 xl:h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00A86B]/20 transition-colors shrink-0">
+            <i className="far fa-envelope text-[#00A86B] text-[8px] xl:text-[9px]"></i>
+          </span>
+          <span className="hidden md:inline">{data.email}</span>
+        </Link>
+      )}
+      {data?.links?.length > 0 && (
+        <div className="hidden lg:flex items-center gap-2 pl-4 border-l border-white/20">
+          {data.links.map((item, i) => (
+            <Link
+              key={i}
+              href={item.link}
+              target="_blank"
+              className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/80 hover:bg-[#00A86B] hover:text-white transition-all text-[10px]"
+            >
+              {item.platform === "facebook"  && <i className="fab fa-facebook-f"></i>}
+              {item.platform === "tweeter"   && <i className="fab fa-twitter"></i>}
+              {item.platform === "instagram" && <i className="fab fa-instagram"></i>}
+              {item.platform === "youtube"   && <i className="fab fa-youtube"></i>}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
-       
-        {/* <div id="sp-top2" className="text-center md:text-right md:w-1/3 lg:w-5/12">
-          <ul className="flex items-center justify-center md:justify-end gap-4 text-white">
-            {loading ? (
-              <>
-                
-                <li className="h-5 w-5 bg-gray-400 animate-pulse rounded-full"></li>
-                <li className="h-5 w-5 bg-gray-400 animate-pulse rounded-full"></li>
-                <li className="h-5 w-5 bg-gray-400 animate-pulse rounded-full"></li>
-                <li className="h-5 w-5 bg-gray-400 animate-pulse rounded-full"></li>
-              </>
-            ) : (
-              data?.links?.map((item, index) => (
-                <li key={index}>
-                  <Link href={item.link} target="_blank" className="hover:text-gray-300">
-                    {item.platform === "facebook" && <i className="fab fa-facebook-f"></i>}
-                    {item.platform === "tweeter" && <i className="fab fa-twitter"></i>}
-                    {item.platform === "instagram" && <i className="fab fa-instagram"></i>}
-                    {item.platform === "youtube" && <i className="fab fa-youtube"></i>}
-                  </Link>
-                </li>
-              ))
-            )}
-          </ul>
-        </div> */}
+  return (
+    <div className="bg-[#0B3B91] w-full overflow-x-hidden">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-28 mx-auto py-2 xl:py-2.5">
+        <div className="flex items-center justify-between gap-3">
+
+          {/* ── Mobile ( < md ): 2 key badges + phone icon ── */}
+          <div className="flex md:hidden items-center gap-2 min-w-0">
+            {allBadges.slice(0, 2).map((badge, i) => (
+              <React.Fragment key={i}>
+                <span className="flex items-center gap-1 shrink-0">
+                  <i className={`${badge.icon} text-[#00A86B] text-[9px]`}></i>
+                  <span className="font-poppins text-white text-[10px] font-medium whitespace-nowrap">
+                    {badge.label}
+                  </span>
+                </span>
+                {i === 0 && <span className="text-white/25 text-[10px]">|</span>}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* ── Tablet ( md → lg ): 3 pill badges ───────── */}
+          <div className="hidden md:flex lg:hidden items-center gap-1.5 min-w-0">
+            {allBadges.slice(0, 3).map((badge, i) => (
+              <React.Fragment key={i}>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 border border-white/15 shrink-0">
+                  <i className={`${badge.icon} text-[#00A86B] text-[10px]`}></i>
+                  <span className="font-poppins text-white text-[10px] font-medium whitespace-nowrap">
+                    {badge.label}
+                  </span>
+                </div>
+                {i < 2 && <span className="text-white/20 text-xs">|</span>}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* ── Small Desktop ( lg → xl ): 3 pill badges ── */}
+          <div className="hidden lg:flex xl:hidden items-center gap-1.5 min-w-0">
+            {allBadges.slice(0, 3).map((badge, i) => (
+              <React.Fragment key={i}>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 shrink-0">
+                  <i className={`${badge.icon} text-[#00A86B] text-[10px]`}></i>
+                  <span className="font-poppins text-white text-[11px] font-medium whitespace-nowrap">
+                    {badge.label}
+                  </span>
+                </div>
+                {i < 2 && <span className="text-white/20 text-xs">|</span>}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* ── Large Desktop ( xl+ ): all 5 badges ─────── */}
+          <div className="hidden xl:flex items-center gap-1 min-w-0">
+            {allBadges.map((badge, i) => (
+              <React.Fragment key={i}>
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 hover:bg-white/20 transition-colors cursor-default shrink-0">
+                  <i className={`${badge.icon} text-[#00A86B] text-[10px]`}></i>
+                  <span className="font-poppins text-white text-[11px] font-medium whitespace-nowrap tracking-wide">
+                    {badge.label}
+                  </span>
+                </div>
+                {i < allBadges.length - 1 && (
+                  <span className="text-white/20 text-xs px-0.5">|</span>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* ── Contact (all screens) ─────────────────────── */}
+          <ContactLinks />
+
+        </div>
       </div>
+
+      {/* Green accent line */}
+      <div className="h-[2px] bg-gradient-to-r from-transparent via-[#00A86B] to-transparent opacity-60" />
     </div>
   );
 };

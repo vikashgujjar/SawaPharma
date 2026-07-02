@@ -1,106 +1,224 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, EffectFade } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
 import Link from "next/link";
-import { baseLink, storageLink } from "../config/Apilink";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import {
+  Download, Users, CheckCircle2, Send, MessageCircle,
+  Package, MapPin, Globe2, Headphones, ShieldCheck,
+  User, Phone, Building2, MessageSquare, ArrowRight,
+} from "lucide-react";
 
-const Banner = () => {
-  const [banners, setBanners] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const stats = [
+  { Icon: Package,    value: "500+", label: "Products Manufactured" },
+  { Icon: MapPin,     value: "25+",  label: "States Served"         },
+  { Icon: Globe2,     value: "10+",  label: "Countries Exported"    },
+  { Icon: Headphones, value: "24×7", label: "Customer Support"      },
+];
 
-  useEffect(() => {
-    const fetchBanners = async () => {
-      try {
-        const response = await fetch(`${baseLink}/banner`);
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-        const data = await response.json();
-        setBanners(data);
-      } catch (error) {
-        console.error("Error fetching banner data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+const trustItems = ["WHO-GMP Certified", "ISO Certified", "Made in India", "Export Ready"];
+const productCategories = ["Tablets", "Capsules", "Liquid Injections", "Dry Injections", "Syrup"];
 
-    fetchBanners();
-  }, []);
+/* Real Unsplash pharma-manufacturing photography (free tier, verified working).
+   Swap for the client's own factory photos whenever ready — same array shape. */
+const bgImages = [
+  "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=1920&auto=format&fit=crop", // factory workers in masks/coats
+  "https://images.unsplash.com/photo-1748349221526-33b51820b21e?q=80&w=1920&auto=format&fit=crop", // cleanroom, protective suits
+  "https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=1920&auto=format&fit=crop", // operator running cleanroom machinery
+];
+
+/* ─── Glass field — icon chip beside an underline input ─── */
+const GlassField = ({ icon: Icon, label, type = "text", name, value, onChange, as = "input", options, required }) => {
+  const inputCls =
+    "w-full bg-transparent border-b border-white/25 focus:border-[#00A86B] outline-none " +
+    "font-inter text-white placeholder-white/40 text-[13px] py-2 transition-colors duration-200";
 
   return (
-    <section className="relative">
-      <div className="relative h-full">
-        <Swiper
-          modules={[Autoplay]}
-          autoplay={{ delay: 3500, disableOnInteraction: false }}
-          loop={true}
-          className="innerbanner"
-          style={{ height: "400px" }}
-        >
-          {isLoading
-            ? Array.from({ length: 3 }).map((_, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative h-full">
-                  <Skeleton
-                    className="w-full h-full"
-                    style={{ height: "400px" }}
-                  />
-                </div>
-              </SwiperSlide>
-            ))
-            : banners.map((banner, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="relative h-full"
-                  style={{
-                    backgroundImage: `url(${storageLink}/${banner.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    height: "400px",
-                  }}
-                >
-                  {/* <div
-                    className="absolute inset-0 bg-black bg-opacity-50"
-                    style={{
-                      mixBlendMode: "multiply",
-                    }}
-                  ></div> */}
-                </div>
-              </SwiperSlide>
-            ))}
-        </Swiper>
+    <div className="flex items-start gap-3">
+      <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/15 flex items-center justify-center shrink-0 mt-0.5">
+        <Icon size={14} className="text-[#00A86B]" />
+      </div>
+      <div className="flex-1 min-w-0">
+        <label className="block font-poppins text-white/45 text-[10px] font-medium tracking-[0.08em] uppercase mb-0.5">
+          {label}
+        </label>
+        {as === "select" ? (
+          <select name={name} value={value} onChange={onChange} required={required}
+            className={`${inputCls} appearance-none cursor-pointer [&>option]:text-gray-800`}>
+            <option value="" className="text-gray-400">Choose category</option>
+            {options.map((o, i) => <option key={i} value={o}>{o}</option>)}
+          </select>
+        ) : as === "textarea" ? (
+          <textarea name={name} value={value} onChange={onChange} rows={1}
+            className={`${inputCls} resize-none`} placeholder="Optional" />
+        ) : (
+          <input type={type} name={name} value={value} onChange={onChange} required={required}
+            className={inputCls} placeholder={required ? "Required" : "Optional"} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+/* ─── Quick Enquiry — glassmorphic, sits directly on the carousel ─── */
+const QuickEnquiryForm = () => {
+  const [form, setForm] = useState({ name: "", phone: "", company: "", country: "", product: "", message: "" });
+  const onChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const onSubmit = (e) => e.preventDefault();
+
+  return (
+    <div className="w-full rounded-2xl overflow-hidden border border-white/15 bg-[#0B3B91]/55 backdrop-blur-2xl shadow-[0_25px_70px_rgba(3,12,35,0.6)]">
+      {/* header */}
+      <div className="px-5 pt-5 pb-4 border-b border-white/15 flex items-center justify-between bg-[#071B47]/40">
+        <div>
+          <h3 className="font-poppins font-semibold text-white text-[15px] leading-none flex items-center gap-2">
+            Get a Quote
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00A86B] animate-pulse" />
+          </h3>
+          <p className="font-inter text-white/45 text-[11px] mt-1.5">Our team replies within 24 hours</p>
+        </div>
+        <div className="w-9 h-9 rounded-full bg-[#00A86B]/20 border border-[#00A86B]/40 flex items-center justify-center shrink-0">
+          <Send size={14} className="text-[#00A86B]" />
+        </div>
       </div>
 
-      {/* Text and Button Section (not in the Swiper) */}
-      <div className="w-full  absolute top-5 lg:top-0  z-20 ">
-        <div className="w-full lg:w-1/2 px-28">
-          {banners.length > 0 && !isLoading && (
-            <>
-             
-              {/* <p
-                className="text-white  fz16  mt-4 pb-4 wow fadeInUp"
-                data-wow-delay=".5s"
-              >
-                {banners[0].text}
-              </p>
+      <form onSubmit={onSubmit} className="px-5 py-5 flex flex-col gap-4">
+        <GlassField icon={User} label="Full Name" name="name" value={form.name} onChange={onChange} required />
+        <GlassField icon={Phone} label="Phone / WhatsApp" type="tel" name="phone" value={form.phone} onChange={onChange} required />
+
+        <div className="grid grid-cols-2 gap-4">
+          <GlassField icon={Building2} label="Company" name="company" value={form.company} onChange={onChange} />
+          <GlassField icon={Globe2} label="Country" name="country" value={form.country} onChange={onChange} />
+        </div>
+
+        <GlassField icon={Package} label="Product Category" as="select" name="product" value={form.product} onChange={onChange} options={productCategories} />
+        <GlassField icon={MessageSquare} label="Requirements" as="textarea" name="message" value={form.message} onChange={onChange} />
+
+        <button
+          type="submit"
+          className="w-full mt-1 bg-[#00A86B] hover:bg-[#008f5a] text-white font-poppins font-semibold
+            text-[13px] py-3 rounded-xl flex items-center justify-center gap-2
+            transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#00A86B]/30 group"
+        >
+          Send Enquiry
+          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+        </button>
+
+        <Link
+          href="https://wa.me/919875939879" target="_blank"
+          className="flex items-center justify-center gap-2 pt-3 border-t border-white/10
+            text-white/50 text-[11px] font-inter hover:text-[#25D366] transition-colors duration-200"
+        >
+          <MessageCircle size={13} className="text-[#25D366]" />
+          Or chat with us on WhatsApp
+        </Link>
+      </form>
+    </div>
+  );
+};
+
+/* ─── Main Hero ─────────────────────────────────────────── */
+const Banner = () => {
+  return (
+    <section className="w-full bg-[#071B47] relative overflow-hidden">
+
+      {/* ── Background image carousel ── */}
+      <div className="absolute inset-0">
+        <Swiper
+          modules={[Autoplay, EffectFade]}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          loop
+          className="w-full h-full [filter:brightness(0.4)_saturate(0.65)]"
+        >
+          {bgImages.map((src, i) => (
+            <SwiperSlide key={i}>
               <div
-                className="hero-btn animate-fadeInUp"
-                style={{ animationDelay: "1s" }}
-              >
-                <Link href="/contact-us" className="theme-btn flex items-center">
-                  Contact Us
-                  <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-                <Link href="#learn" className="theme-btn theme-btn2 flex items-center">
-                  Learn More
-                  <i className="fas fa-arrow-right ml-2"></i>
-                </Link>
-              </div> */}
-            </>
-          )}
+                className="w-full h-full bg-gradient-to-br from-[#0B3B91] to-[#040d20]"
+                style={{ backgroundImage: `url(${src})`, backgroundSize: "cover", backgroundPosition: "center" }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        {/* darker, fixed overlay — never depends on how bright the source image is */}
+        <div className="absolute inset-0 bg-[#040d20]/90" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#040d20]/55 via-transparent to-[#040d20]/55" />
+      </div>
+
+      <div className="relative z-10 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28 pt-14 sm:pt-16 lg:pt-20 pb-16 sm:pb-20">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 xl:gap-20">
+
+          {/* ── Left: copy ── */}
+          <div className="flex-1 min-w-0 w-full text-center lg:text-left">
+
+            <div className="flex items-center justify-center lg:justify-start gap-2.5 mb-6 flex-wrap">
+              <div className="inline-flex items-center gap-2 bg-[#00A86B]/15 border border-[#00A86B]/35 rounded-full pl-1.5 pr-3.5 py-1.5">
+                <div className="w-5 h-5 rounded-full bg-[#00A86B] flex items-center justify-center shrink-0">
+                  <ShieldCheck size={10} className="text-white" />
+                </div>
+                <span className="font-poppins text-[#00A86B] text-[10px] font-semibold tracking-[0.16em] uppercase">
+                  WHO-GMP Certified
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+                <span className="font-poppins text-white/55 text-[10px] font-semibold tracking-[0.1em] uppercase">
+                  Made in India
+                </span>
+              </div>
+            </div>
+
+            <p className="font-poppins text-white/35 font-semibold tracking-[0.32em] uppercase mb-2 text-[12px] sm:text-sm">
+              Manufacturing
+            </p>
+            <h1 className="font-poppins font-bold text-white leading-[1.05] text-[2.6rem] sm:text-[3.4rem] md:text-[3.9rem] xl:text-[4.4rem]">
+              Healthcare With
+            </h1>
+            <h1 className="font-poppins font-bold text-[#00A86B] leading-[1.05] mb-5 text-[2.6rem] sm:text-[3.4rem] md:text-[3.9rem] xl:text-[4.4rem]">
+              Precision.
+            </h1>
+
+            <p className="font-inter text-white/85 text-[15px] sm:text-base leading-relaxed max-w-lg mx-auto lg:mx-0 mb-2">
+              WHO-GMP certified pharmaceutical manufacturer &amp; global export partner.
+            </p>
+            <p className="font-inter text-white/45 text-sm leading-relaxed max-w-md mx-auto lg:mx-0 mb-8">
+              Delivering quality medicines across India and international markets with precision, compliance, and care.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 mb-9">
+              <Link href="/contact-us"
+                className="inline-flex items-center gap-2 font-poppins font-semibold text-white bg-[#00A86B] rounded-xl
+                  transition-all duration-300 hover:bg-[#008f5a] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#00A86B]/30
+                  text-sm px-6 py-3.5 w-full sm:w-auto justify-center">
+                <Download size={15} />
+                Request Product Catalogue
+              </Link>
+              <Link href="/contact-us"
+                className="inline-flex items-center gap-2 font-poppins font-semibold text-white border-2 border-white/30 rounded-xl
+                  transition-all duration-300 hover:bg-white hover:text-[#0B3B91] hover:border-white hover:-translate-y-0.5
+                  text-sm px-6 py-3.5 w-full sm:w-auto justify-center">
+                <Users size={15} />
+                Become a Partner
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-5 gap-y-2 pt-6 border-t border-white/10">
+              {trustItems.map((t, i) => (
+                <div key={i} className="flex items-center gap-1.5">
+                  <CheckCircle2 size={13} className="text-[#00A86B] shrink-0" />
+                  <span className="font-inter text-white/50 text-[12px] whitespace-nowrap">{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Right: glass enquiry form ── */}
+          <div className="w-full max-w-[380px] shrink-0">
+            <QuickEnquiryForm />
+          </div>
         </div>
       </div>
     </section>

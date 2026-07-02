@@ -10,6 +10,16 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        navy: "#0B3B91",
+        "navy-dark": "#0a3280",
+        green: "#00A86B",
+        "green-dark": "#008f5a",
+        accent: "#EAF4FF",
+      },
+      fontFamily: {
+        playfair: ["var(--font-playfair)", "serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        inter: ["var(--font-inter)", "sans-serif"],
       },
     },
   },
