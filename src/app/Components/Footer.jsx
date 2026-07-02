@@ -4,11 +4,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { baseLink } from "../config/Apilink";
 import {
-  MapPin, Mail, Phone, MessageCircle,
-  Facebook, Twitter, Instagram, Youtube, ArrowUpRight,
+  MapPin, Mail, Phone, MessageCircle, ArrowUpRight,
 } from "lucide-react";
+import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
-const socialIcons = { facebook: Facebook, tweeter: Twitter, instagram: Instagram, youtube: Youtube };
+const socialIcons = { facebook: FaFacebook, tweeter: FaTwitter, instagram: FaInstagram, youtube: FaYoutube };
 
 const productLinks = [
   { label: "Tablets", href: "/tablets" },
