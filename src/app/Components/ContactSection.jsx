@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Swal from "sweetalert2";
 import { baseLink } from "../config/Apilink";
 import {
   MapPin, Factory, Phone, Mail, Clock, MessageCircle,
@@ -61,6 +60,7 @@ const ContactSection = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, email, text, product, number } = formData;
+    const Swal = (await import("sweetalert2")).default;
 
     if (!name || !email || !text) {
       Swal.fire({
