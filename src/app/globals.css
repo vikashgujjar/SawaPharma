@@ -319,4 +319,37 @@ select.exploreIndustries {
   border-radius: 4px !important;
 }
 
+/* Google Translate widget — keep the engine, hide Google's own chrome
+   since we drive language selection through our own LanguageSwitcher UI */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.goog-te-banner-frame,
+iframe[id^="\:"][class*="skiptranslate"],
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  opacity: 0 !important;
+}
+#google_translate_element {
+  display: none !important;
+}
+body,
+html {
+  top: 0 !important;
+  position: static !important;
+}
+.goog-te-gadget-icon {
+  display: none !important;
+}
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+}
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
 

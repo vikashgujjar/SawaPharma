@@ -2,6 +2,7 @@ import { Playfair_Display, Poppins, Inter } from "next/font/google";
 import Footer from "./Components/Footer";
 import NavBar from "./Components/Navbar";
 import Topbar from "./Components/Topbar";
+import GoogleTranslate from "./Components/GoogleTranslate";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${poppins.variable} ${inter.variable}`}>
+        <GoogleTranslate />
         <Topbar />
         <NavBar />
         {children}
