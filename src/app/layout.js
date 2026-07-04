@@ -26,7 +26,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Sawa Pharma (India) Pvt. Ltd.",
+  title: "Sawa Pharma India Pvt. Ltd.",
   description: "WHO-GMP Certified Pharmaceutical Manufacturer & Global Export Partner.",
 };
 

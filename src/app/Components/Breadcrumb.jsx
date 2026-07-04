@@ -5,9 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home } from "lucide-react";
 
-const BG_IMAGE = "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=1920&auto=format&fit=crop";
+const BG_IMAGE = "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=85&w=2400&auto=format&fit=crop";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ image = BG_IMAGE }) => {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
@@ -32,17 +32,17 @@ const Breadcrumb = () => {
       {/* background photo */}
       <div className="absolute inset-0">
         <Image
-          src={BG_IMAGE}
+          src={image}
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover [filter:brightness(0.55)_saturate(0.7)]"
+          className="object-cover [filter:brightness(0.8)_saturate(0.9)]"
         />
-        {/* fixed-strength overlay — legible regardless of image brightness */}
-        <div className="absolute inset-0 bg-[#040d20]/80" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#040d20]/70 via-[#040d20]/40 to-[#0B3B91]/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#040d20]/60 via-transparent to-transparent" />
+        {/* overlay tuned to keep text legible without blacking out the photo */}
+        <div className="absolute inset-0 bg-[#040d20]/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#040d20]/55 via-[#040d20]/20 to-[#0B3B91]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#040d20]/45 via-transparent to-transparent" />
       </div>
 
       <div className="relative px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28 py-10 sm:py-12">

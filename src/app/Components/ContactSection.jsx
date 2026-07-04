@@ -11,17 +11,30 @@ import {
 const quickInfo = [
   {
     Icon: MapPin,
-    title: "Office Address",
+    title: "Corporate Office",
     lines: ["SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5,", "Panchkula, Haryana - 134109 (Near Indian Overseas Bank, MDC)"],
   },
   {
     Icon: Factory,
-    title: "Factory Address",
+    title: "Warehouse",
     lines: [
       "Khasra No. 823/824, Village Gularwala, Near Saraswati",
-      "Vidya Mandir School, Teh. Baddi, Distt. Solan, HP - 173205",
+      "Vidya Mandir School Gularwala, Teh. Baddi, Distt. Solan, HP - 173205",
     ],
     links: [{ label: "+91-94590-89604", href: "tel:+919459089604" }],
+  },
+  {
+    Icon: Factory,
+    title: "Unit 1",
+    lines: ["SIDCO Industrial Complex, Kathua,", "Kathua, Jammu and Kashmir - 184101"],
+  },
+  {
+    Icon: Factory,
+    title: "Unit II",
+    lines: [
+      "Vill. Kishanpura, P.O. Manpura, Nalagarh Road,",
+      "Tehsil-Baddi, Distt. Solan, Himachal Pradesh - 174101",
+    ],
   },
   {
     Icon: Phone,
@@ -51,8 +64,8 @@ const MAP_QUERY = encodeURIComponent(
 );
 
 const facilityPhotos = [
-  { label: "Office", src: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=800&auto=format&fit=crop" },
-  { label: "Factory", src: "https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=800&auto=format&fit=crop" },
+  { label: "Office", src: "https://images.unsplash.com/photo-1758448721149-aa0ce8e1b2c9?q=85&w=1100&auto=format&fit=crop" },
+  { label: "Factory", src: "https://images.unsplash.com/photo-1607398027609-fbd1a06fb5d4?q=85&w=1100&auto=format&fit=crop" },
 ];
 
 const ContactSection = () => {
@@ -133,7 +146,7 @@ const ContactSection = () => {
         </div>
 
         {/* quick info strip */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto mb-12">
           {quickInfo.map(({ Icon, title, lines, links }, i) => (
             <div key={i} className="bg-[#EAF4FF]/40 rounded-2xl p-5 border border-[#0B3B91]/8">
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm mb-3">

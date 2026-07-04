@@ -57,7 +57,7 @@ const Page = () => {
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb image="https://images.unsplash.com/photo-1748000970909-845f4aa144d2?q=85&w=2400&auto=format&fit=crop" />
 
       <section className="w-full bg-white py-16 sm:py-24">
         <div className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28">

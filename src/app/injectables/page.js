@@ -48,7 +48,7 @@ const ProductTable = () => {
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb image="https://images.unsplash.com/photo-1618961734760-466979ce35b0?q=85&w=2400&auto=format&fit=crop" />
       <div className="container mx-auto py-20 px-5 lg:px-28">
         <div className="border mb-1 flex gap-5 px-2 lg:px-5 py-2 justify-between">
           <h1 className="text-sm lg:text-2xl py-3 font-semibold text-center">

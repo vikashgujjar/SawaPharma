@@ -81,7 +81,7 @@ const AboutEditorialRight = () => (
 
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.5)]">
             <Image
-              src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?q=80&w=900&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1748002388689-c62b45d5c28b?q=85&w=1200&auto=format&fit=crop"
               alt="Sawa Pharma manufacturing facility"
               fill
               sizes="(max-width: 1024px) 100vw, 40vw"
@@ -93,24 +93,25 @@ const AboutEditorialRight = () => (
               </div>
               <span className="font-poppins text-white text-[10px] font-semibold tracking-wide">WHO-GMP Certified</span>
             </div>
-          </div>
 
-          <div className="absolute bottom-0 left-0 w-[48%] aspect-[4/3] rounded-xl overflow-hidden
-                          border-[3px] border-[#040d20] shadow-[0_16px_40px_rgba(0,0,0,0.6)]">
-            <Image
-              src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=500&auto=format&fit=crop"
-              alt="Quality control at Sawa Pharma"
-              fill
-              sizes="200px"
-              className="object-cover"
-            />
+            {/* anchored to the main photo's own corner so it can never overlap the caption below */}
+            <div className="absolute bottom-0 left-0 w-[48%] aspect-[4/3] rounded-xl overflow-hidden
+                            border-[3px] border-[#040d20] shadow-[0_16px_40px_rgba(0,0,0,0.6)]">
+              <Image
+                src="https://images.unsplash.com/photo-1579165466949-3180a3d056d5?q=85&w=700&auto=format&fit=crop"
+                alt="Quality control at Sawa Pharma"
+                fill
+                sizes="200px"
+                className="object-cover"
+              />
+            </div>
           </div>
 
           <div className="mt-4 flex items-baseline justify-between pl-2">
             <span className="font-mono text-[10px] text-[#00A86B]/70 tracking-wider">FIG. 01</span>
             <div className="text-right">
               <p className="font-poppins font-bold text-white text-[15px]">Manufacturing Excellence</p>
-              <p className="font-inter text-white/40 text-[12px]">Sawa Pharma (India) Pvt. Ltd.</p>
+              <p className="font-inter text-white/40 text-[12px]">Sawa Pharma India Pvt. Ltd.</p>
             </div>
           </div>
         </div>

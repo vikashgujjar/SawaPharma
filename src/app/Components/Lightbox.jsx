@@ -23,7 +23,8 @@ const Lightbox = ({ items, storageLink, activeIndex, onClose, onPrev, onNext, on
 
   if (!item) return null;
 
-  const src = `${storageLink}/${item.image}`;
+  const resolveSrc = (image) => (image.startsWith("http") ? image : `${storageLink}/${image}`);
+  const src = resolveSrc(item.image);
 
   const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e) => {
@@ -121,7 +122,7 @@ const Lightbox = ({ items, storageLink, activeIndex, onClose, onPrev, onNext, on
               className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden shrink-0 transition-all duration-200
                 ${i === activeIndex ? "ring-2 ring-[#00A86B] opacity-100" : "opacity-40 hover:opacity-70"}`}
             >
-              <Image src={`${storageLink}/${it.image}`} alt="" fill sizes="64px" className="object-cover" />
+              <Image src={resolveSrc(it.image)} alt="" fill sizes="64px" className="object-cover" />
             </button>
           ))}
         </div>

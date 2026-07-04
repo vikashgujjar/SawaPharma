@@ -30,6 +30,20 @@ const categories = [
   { key: "export",     label: "Export" },
 ];
 
+/* TEMPORARY: the CMS-uploaded gallery photos are small (~14KB) source
+   files and look blurry at this grid's display size. Overriding with
+   high-resolution stock photos, cycling through by item order, until
+   proper photography is uploaded through the admin panel. Remove this
+   override (and go back to `${storageLink}/${item.image}`) once that's done. */
+const STOCK_GALLERY_IMAGES = [
+  "https://images.unsplash.com/photo-1748000970909-845f4aa144d2?q=85&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1669101602124-f5b78895d91c?q=85&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1668600418844-5b3d2e381e10?q=85&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1669101283516-e608dcf142df?q=85&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1639772823849-6efbd173043c?q=85&w=1200&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1573207535342-8c0f9506112e?q=85&w=1200&auto=format&fit=crop",
+];
+
 const GalleryDark = () => {
   const [galleryItems, setGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +58,11 @@ const GalleryDark = () => {
         const response = await fetch(`${baseLink}/gallery`);
         if (!response.ok) throw new Error("Failed to fetch gallery items");
         const data = await response.json();
-        if (!cancelled) setGalleryItems(data);
+        const withStockImages = data.map((item, i) => ({
+          ...item,
+          image: STOCK_GALLERY_IMAGES[i % STOCK_GALLERY_IMAGES.length],
+        }));
+        if (!cancelled) setGalleryItems(withStockImages);
       } catch (err) {
         if (!cancelled) setError(err.message);
       } finally {
@@ -124,7 +142,7 @@ const GalleryDark = () => {
                 className="relative h-[280px] rounded-xl overflow-hidden group cursor-pointer text-left border border-white/10"
               >
                 <Image
-                  src={`${storageLink}/${item.image}`}
+                  src={item.image}
                   alt={item.title || `Sawa Pharma gallery photo ${i + 1}`}
                   fill
                   loading="lazy"

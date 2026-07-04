@@ -5,6 +5,22 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { baseLink, storageLink } from "../config/Apilink";
 
+/* TEMPORARY: the CMS-uploaded images for this section are heavily
+   compressed (5-6KB source files) and render blurry regardless of
+   display size. Overriding with high-resolution stock photos, keyed
+   by each service's real `link` field, until proper photography is
+   uploaded through the admin panel. Remove this override (and go back
+   to `${storageLink}/${s.image}`) once that's done. */
+const STOCK_IMAGE_BY_LINK = {
+  injectables: "https://images.unsplash.com/photo-1670098073774-440ea94549d0?q=85&w=1400&auto=format&fit=crop",
+  tablets: "https://images.unsplash.com/photo-1573883430697-4c3479aae6b9?q=85&w=1400&auto=format&fit=crop",
+  "liquid-injection": "https://images.unsplash.com/photo-1611690828749-66c846dbd1b4?q=85&w=1400&auto=format&fit=crop",
+  "dry-injection": "https://images.unsplash.com/photo-1618015359994-a67bd07e48b5?q=85&w=1400&auto=format&fit=crop",
+  capsules: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=85&w=1400&auto=format&fit=crop",
+  syrup: "https://images.unsplash.com/photo-1635166304271-04931640a450?q=85&w=1400&auto=format&fit=crop",
+};
+const FALLBACK_SERVICE_IMAGE = "https://images.unsplash.com/photo-1748000970909-845f4aa144d2?q=85&w=1400&auto=format&fit=crop";
+
 const ServicesGrid = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,7 +85,7 @@ const ServicesGrid = () => {
                   style={{ flexGrow: isActive ? 6 : 1, flexBasis: 0, minWidth: isActive ? 0 : 64 }}
                 >
                   <Image
-                    src={`${storageLink}/${s.image}`}
+                    src={STOCK_IMAGE_BY_LINK[s.link] || FALLBACK_SERVICE_IMAGE}
                     alt={s.title || "Sawa Pharma service"}
                     fill
                     sizes="(max-width: 1280px) 50vw, 20vw"
@@ -132,7 +148,7 @@ const ServicesGrid = () => {
             {services.map((s, i) => (
               <div key={s.id} className="relative h-56 rounded-2xl overflow-hidden">
                 <Image
-                  src={`${storageLink}/${s.image}`}
+                  src={STOCK_IMAGE_BY_LINK[s.link] || FALLBACK_SERVICE_IMAGE}
                   alt={s.title || "Sawa Pharma service"}
                   fill
                   sizes="100vw"

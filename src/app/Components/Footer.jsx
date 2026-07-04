@@ -188,7 +188,7 @@ const Footer = () => {
         @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
         @keyframes wordmarkPan { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
         .wordmark-clip {
-          background-image: url('https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=1600&auto=format&fit=crop');
+          background-image: url('https://images.unsplash.com/photo-1669101283516-e608dcf142df?q=85&w=2000&auto=format&fit=crop');
           background-size: 180% auto;
           background-position: 0% 50%;
           background-repeat: no-repeat;

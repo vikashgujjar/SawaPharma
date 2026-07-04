@@ -12,6 +12,16 @@ import { FileDown, Search, AlertCircle } from "lucide-react";
    Display: Poppins · Body: Inter
 ───────────────────────────────────────────────────────── */
 
+/* Category-specific medicine photography for each product page's
+   breadcrumb banner, keyed by endpoint. Verified working Unsplash URLs. */
+const CATEGORY_IMAGE = {
+  tabletp: "https://images.unsplash.com/photo-1573883430697-4c3479aae6b9?q=85&w=2400&auto=format&fit=crop", // round white pills
+  capsule: "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=85&w=2400&auto=format&fit=crop", // assorted tablets & capsules
+  liquidinjection: "https://images.unsplash.com/photo-1616117452218-ea3a864716c7?q=85&w=2400&auto=format&fit=crop", // clear glass bottle, plain product shot
+  dryinjectable: "https://images.unsplash.com/photo-1576671081803-5dcb9836dc61?q=85&w=2400&auto=format&fit=crop", // glass vials, wide product shot
+  syrup: "https://images.unsplash.com/photo-1635166304271-04931640a450?q=85&w=2400&auto=format&fit=crop", // syrup bottle
+};
+
 const ProductTable = ({
   endpoint = "tabletp",
   title = "SAWA PHARMA INDIA PRIVATE LIMITED — TABLETS",
@@ -82,7 +92,7 @@ const ProductTable = ({
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb image={CATEGORY_IMAGE[endpoint]} />
 
       <div className="w-full bg-white py-16 sm:py-20">
         <div className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28">

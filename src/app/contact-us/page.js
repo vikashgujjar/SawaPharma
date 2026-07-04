@@ -5,7 +5,7 @@ import Breadcrumb from '../Components/Breadcrumb'
 const page = () => {
   return (
     <>
-    <Breadcrumb />
+    <Breadcrumb image="https://images.unsplash.com/photo-1758193017781-e3aee6c3e359?q=85&w=2400&auto=format&fit=crop" />
     <ContactSection />
     <div className="p-4 pb-10">
       <div className="relative overflow-hidden rounded-lg shadow-md">

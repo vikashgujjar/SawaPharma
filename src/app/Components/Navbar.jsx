@@ -100,11 +100,11 @@ const NavBar = () => {
               />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="font-playfair font-bold text-[#0B3B91] text-[14px] sm:text-[15px] lg:text-[17px] tracking-tight leading-none">
+              <span className="font-poppins font-bold text-[#0B3B91] text-[18px] sm:text-[20px] lg:text-[22px] tracking-tight leading-none">
                 Sawa Pharma
               </span>
-              <span className="hidden sm:block font-poppins text-[8px] lg:text-[9px] text-[#00A86B] tracking-[0.15em] uppercase font-semibold mt-0.5">
-                (India) Pvt. Ltd.
+              <span className="hidden sm:block font-poppins text-[9px] lg:text-[10px] text-[#00A86B] tracking-[0.15em] uppercase font-semibold mt-0.5">
+                India Pvt. Ltd.
               </span>
             </div>
           </Link>

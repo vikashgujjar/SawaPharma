@@ -24,9 +24,9 @@ const productCategories = ["Tablets", "Capsules", "Liquid Injections", "Dry Inje
 /* Real Unsplash pharma-manufacturing photography (free tier, verified working).
    Swap for the client's own factory photos whenever ready — same array shape. */
 const bgImages = [
-  "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=1920&auto=format&fit=crop", // factory workers in masks/coats
-  "https://images.unsplash.com/photo-1748349221526-33b51820b21e?q=80&w=1920&auto=format&fit=crop", // cleanroom, protective suits
-  "https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=1920&auto=format&fit=crop", // operator running cleanroom machinery
+  "https://images.unsplash.com/photo-1757578097654-fdae0f7cf008?q=85&w=2400&auto=format&fit=crop", // tablets on the production line
+  "https://images.unsplash.com/photo-1732690233982-1d4567384ea1?q=85&w=2400&auto=format&fit=crop", // technician operating tablet press
+  "https://images.unsplash.com/photo-1605829329196-bac9533b1c3c?q=85&w=2400&auto=format&fit=crop", // operator running manufacturing plant machinery
 ];
 
 /* ─── Glass field — icon chip beside an underline input ─── */

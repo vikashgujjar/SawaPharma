@@ -26,15 +26,15 @@ import { Globe2, Target, Award, ShieldCheck } from "lucide-react";
 ───────────────────────────────────────────────────────── */
 
 const polaroids = [
-  { src: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=500&auto=format&fit=crop", caption: "Our production floor", rotate: "-rotate-6", pos: "top-0 left-0" },
-  { src: "https://images.unsplash.com/photo-1748349221526-33b51820b21e?q=80&w=500&auto=format&fit=crop", caption: "Cleanroom operations", rotate: "rotate-3", pos: "top-10 left-[38%]" },
-  { src: "https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=500&auto=format&fit=crop", caption: "Quality in motion", rotate: "-rotate-2", pos: "top-[210px] left-[14%]" },
+  { src: "https://images.unsplash.com/photo-1668600418844-5b3d2e381e10?q=85&w=700&auto=format&fit=crop", caption: "Our production floor", rotate: "-rotate-6", pos: "top-0 left-0" },
+  { src: "https://images.unsplash.com/photo-1669101602124-f5b78895d91c?q=85&w=700&auto=format&fit=crop", caption: "Cleanroom operations", rotate: "rotate-3", pos: "top-10 left-[38%]" },
+  { src: "https://images.unsplash.com/photo-1639772823849-6efbd173043c?q=85&w=700&auto=format&fit=crop", caption: "Quality in motion", rotate: "-rotate-2", pos: "top-[210px] left-[14%]" },
 ];
 
 const values = [
-  { Icon: ShieldCheck, title: "Commitment", text: "A passionate, dedicated, experienced team — proud of every batch, every shipment, every partnership.", img: "https://images.unsplash.com/photo-1551884170-09fb70a3a2ed?q=80&w=300&auto=format&fit=crop" },
-  { Icon: Target,       title: "Vision-Driven", text: "Every decision — portfolio, partnerships, presence — measured against one question: does this move us forward.", img: "https://images.unsplash.com/photo-1745420052756-1b1c294a6420?q=80&w=300&auto=format&fit=crop" },
-  { Icon: Award,        title: "Compliance", text: "National and international standards, regularly inspected by competent authorities, fully upheld.", img: "https://images.unsplash.com/photo-1607398027609-fbd1a06fb5d4?q=80&w=300&auto=format&fit=crop" },
+  { Icon: ShieldCheck, title: "Commitment", text: "A passionate, dedicated, experienced team — proud of every batch, every shipment, every partnership.", img: "https://images.unsplash.com/photo-1631669969504-f35518bf96ba?q=85&w=450&auto=format&fit=crop" },
+  { Icon: Target,       title: "Vision-Driven", text: "Every decision — portfolio, partnerships, presence — measured against one question: does this move us forward.", img: "https://images.unsplash.com/photo-1745420052756-1b1c294a6420?q=85&w=450&auto=format&fit=crop" },
+  { Icon: Award,        title: "Compliance", text: "National and international standards, regularly inspected by competent authorities, fully upheld.", img: "https://images.unsplash.com/photo-1614935151651-0bea6508db6b?q=85&w=450&auto=format&fit=crop" },
 ];
 
 const presenceCountries = ["Somalia", "Angola", "Afghanistan"];
@@ -52,7 +52,7 @@ const Polaroid = ({ src, caption, rotate, pos }) => (
 
 const CompanyProfilePage = () => (
   <>
-    <Breadcrumb />
+    <Breadcrumb image="https://images.unsplash.com/photo-1774192620896-98d79d750e15?q=85&w=2400&auto=format&fit=crop" />
 
     {/* ── About Us + polaroid cluster ── */}
     <section className="w-full bg-white py-16 sm:py-24">
@@ -67,12 +67,12 @@ const CompanyProfilePage = () => (
               A Global Healthcare Company, Built On Access.
             </h2>
             <p className="font-inter text-gray-600 text-[15px] leading-relaxed mb-5">
-              Sawa Pharma (India) Pvt. Ltd. is a global healthcare company focused on exporting our unique
+              Sawa Pharma India Pvt. Ltd. is a global healthcare company focused on exporting our unique
               pharmaceutical formulations worldwide. Our core philosophy centers on expanding our business and
               providing affordable healthcare solutions.
             </p>
             <p className="font-inter text-gray-600 text-[15px] leading-relaxed mb-8">
-              Our mission is to improve access to affordable, high-quality medicines. Sawa Pharma (India) Pvt.
+              Our mission is to improve access to affordable, high-quality medicines. Sawa Pharma India Pvt.
               Ltd. has established a presence in countries across Africa and South Asia, among others.
             </p>
 
@@ -103,7 +103,7 @@ const CompanyProfilePage = () => (
     {/* ── Vision — full-bleed photo band with plaque overlay ── */}
     <section className="relative w-full h-[380px] sm:h-[440px] overflow-hidden">
       <Image
-        src="https://images.unsplash.com/photo-1745420052704-f70b1d30c8b7?q=80&w=1600&auto=format&fit=crop"
+        src="https://images.unsplash.com/photo-1669707041081-dd4d51943041?q=85&w=2000&auto=format&fit=crop"
         alt="Sawa Pharma manufacturing operations"
         fill
         sizes="100vw"
