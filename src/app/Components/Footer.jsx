@@ -54,7 +54,7 @@ const Footer = () => {
   return (
     <>
       <Link
-        href="https://wa.me/919875939879"
+        href="https://wa.me/919875939870"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
@@ -79,7 +79,7 @@ const Footer = () => {
 
         {/* ── Link block ── */}
         <div className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-28 pt-16 pb-10">
-          <div className="grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] gap-10 pb-14 border-b border-white/10">
+          <div className="grid md:grid-cols-[1.3fr_1fr_1fr_1.2fr] gap-10 pb-14 border-b-0 border-white/10">
 
             <div>
               <Image
@@ -164,18 +164,18 @@ const Footer = () => {
           </div>
 
           {/* ── Oversized wordmark sign-off — image clipped into the text ── */}
-          <div className="relative py-10 sm:py-14 text-center select-none pointer-events-none overflow-hidden">
+          {/* <div className="relative py-10 sm:py-14 text-center select-none pointer-events-none overflow-hidden">
             <span
               className="wordmark-clip font-poppins font-bold leading-none whitespace-nowrap block
                 text-[15vw] sm:text-[11vw] lg:text-[9rem]"
             >
               SAWA PHARMA
             </span>
-          </div>
+          </div> */}
 
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6 border-t border-white/10">
             <p className="font-inter text-white/35 text-[12px]">
-              © {currentYear} <span className="font-semibold text-white/50">Sawa Pharma</span>. All Rights Reserved.
+              © 2025 <span className="font-semibold text-white/50">Sawa Pharma</span>. All Rights Reserved.
             </p>
             <p className="font-inter text-white/35 text-[12px]">
               Developed by Future Touch

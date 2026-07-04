@@ -198,7 +198,7 @@ const ContactSection = () => {
 
               {/* whatsapp */}
               <Link
-                href="https://wa.me/919875939879"
+                href="https://wa.me/919875939870"
                 target="_blank"
                 className="bg-[#00A86B] rounded-2xl p-5 flex flex-col justify-between hover:bg-[#008f5a] transition-colors group"
               >
