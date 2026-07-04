@@ -271,7 +271,8 @@ const Page = () => {
                   <div>
                     <p className="font-poppins font-semibold text-[#0B3B91] text-[13px] mb-1">Sawa Pharma India Pvt. Ltd.</p>
                     <p className="font-inter text-gray-500 text-[12.5px] leading-relaxed">
-                      SCO/F 21, 1st Floor, Sector 5, Swastik Vihar, Mansa Devi Complex, Haryana - 134114 (India)
+                      SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana - 134109
+                      (Near Indian Overseas Bank, MDC)
                     </p>
                   </div>
                 </div>

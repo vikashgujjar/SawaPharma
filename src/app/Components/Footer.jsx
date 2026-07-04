@@ -133,7 +133,7 @@ const Footer = () => {
               <div className="flex items-start gap-2.5 mb-3">
                 <MapPin size={14} className="text-[#00A86B] shrink-0 mt-0.5" />
                 <p className="font-inter text-white/60 text-[12.5px] leading-relaxed">
-                  SCO/F 21, Sector 5, Mansa Devi Complex, Haryana - 134114
+                  SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana - 134109
                 </p>
               </div>
               <Link href="mailto:ceo@sawapharma.in" className="flex items-center gap-2.5 mb-2.5 font-inter text-white/60 text-[12.5px] hover:text-[#00A86B] transition-colors">

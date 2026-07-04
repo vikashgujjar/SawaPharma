@@ -12,12 +12,16 @@ const quickInfo = [
   {
     Icon: MapPin,
     title: "Office Address",
-    lines: ["SCO/F 21, 1st Floor, Sector 5, Swastik Vihar,", "Mansa Devi Complex, Haryana - 134114 (India)"],
+    lines: ["SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5,", "Panchkula, Haryana - 134109 (Near Indian Overseas Bank, MDC)"],
   },
   {
     Icon: Factory,
     title: "Factory Address",
-    lines: ["Healthonics Lifesciences Pvt. Ltd., SIDCO Ind. Complex,", "Ghati, Kathua Phase 1, J&K, 184143"],
+    lines: [
+      "Khasra No. 823/824, Village Gularwala, Near Saraswati",
+      "Vidya Mandir School, Teh. Baddi, Distt. Solan, HP - 173205",
+    ],
+    links: [{ label: "+91-94590-89604", href: "tel:+919459089604" }],
   },
   {
     Icon: Phone,
@@ -41,10 +45,9 @@ const businessHours = [
   { day: "Sunday",          hours: "Closed" },
 ];
 
-/* Office location used for the map embed — swap the query text
-   for the exact address once confirmed with the client. */
+/* Office location used for the map embed. */
 const MAP_QUERY = encodeURIComponent(
-  "SCO/F 21, Sector 5, Swastik Vihar, Mansa Devi Complex, Panchkula, Haryana 134114"
+  "SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana 134109"
 );
 
 const facilityPhotos = [
