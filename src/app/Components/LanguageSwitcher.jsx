@@ -25,17 +25,47 @@ const getCookie = (name) => {
   return match ? decodeURIComponent(match[1]) : null;
 };
 
+/* Google's own Translate script sets its own `googtrans` cookie (in
+   addition to whatever we set below) when the hidden combo dropdown
+   fires its change event — and it commonly scopes that cookie to a
+   leading-dot domain (e.g. ".sawapharma.in") rather than the exact
+   hostname. If we only ever clear the exact-hostname variant, that
+   cookie survives a "reset to English" and gets re-read on reload,
+   which is why switching back to English didn't stick. Compute every
+   plausible domain variant so set/clear always stays in sync. */
+const getCookieDomains = () => {
+  const hostname = window.location.hostname;
+  const domains = [undefined, hostname, `.${hostname}`];
+  const parts = hostname.split(".");
+  if (parts.length > 2) domains.push(`.${parts.slice(-2).join(".")}`);
+  return domains;
+};
+
+const writeGoogTransCookie = (value) => {
+  getCookieDomains().forEach((domain) => {
+    document.cookie = `googtrans=${value};path=/${domain ? `;domain=${domain}` : ""}`;
+  });
+};
+
+const clearGoogTransCookie = () => {
+  getCookieDomains().forEach((domain) => {
+    document.cookie = `googtrans=;path=/${domain ? `;domain=${domain}` : ""};expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+  });
+};
+
 const applyLanguage = (code) => {
   if (code === "en") {
-    document.cookie = "googtrans=;path=/;expires=Thu, 01 Jan 1970 00:00:00 UTC";
-    document.cookie = `googtrans=;path=/;domain=${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+    clearGoogTransCookie();
+    // Belt-and-suspenders: some browsers don't fully honor expiry-based
+    // deletion for every domain variant, so also overwrite with an
+    // explicit en->en (no-op) value across the same variants, guaranteeing
+    // no leftover cookie can still point at a translated language.
+    writeGoogTransCookie("/en/en");
     window.location.reload();
     return;
   }
 
-  const value = `/en/${code}`;
-  document.cookie = `googtrans=${value};path=/`;
-  document.cookie = `googtrans=${value};path=/;domain=${window.location.hostname}`;
+  writeGoogTransCookie(`/en/${code}`);
 
   const combo = document.querySelector(".goog-te-combo");
   if (combo) {
@@ -89,7 +119,7 @@ const LanguageSwitcher = () => {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-2 w-48 max-h-72 overflow-y-auto bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 z-[60]">
+        <div className="absolute left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-0 top-full mt-2 w-48 max-w-[calc(100vw-1.5rem)] max-h-72 overflow-y-auto bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 z-[60]">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}

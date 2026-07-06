@@ -25,8 +25,8 @@ const categories = [
   { key: "laboratory", label: "Laboratory" },
   { key: "packaging",  label: "Packaging" },
   { key: "warehouse",  label: "Warehouse" },
-  { key: "team",       label: "Team" },
-  { key: "events",     label: "Events" },
+  // { key: "team",       label: "Team" },
+  // { key: "events",     label: "Events" },
   { key: "export",     label: "Export" },
 ];
 
@@ -98,7 +98,7 @@ const GalleryDark = () => {
         </div>
 
         {/* filter tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {/* <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map(({ key, label }) => (
             <button
               key={key}
@@ -111,7 +111,7 @@ const GalleryDark = () => {
               {label}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {error && (
           <p className="text-center font-inter text-red-400 text-sm py-8">

@@ -40,8 +40,52 @@ const COUNTRY_COORDS = {
 const INDIA_HUB_GEO = { lat: 20.6, lon: 78.9, label: "India" };
 const INDIA_HUB = { x: 40, y: 55 }; // fixed illustrative hub for the domestic states panel
 
+/* Nudges apart points that are closer than `minDist` (in the shared 0–100
+   % coordinate space both maps use) so labels don't overlap when several
+   locations are clustered close together — e.g. the East/Central Africa
+   group (South Sudan, Somalia, Uganda, Kenya, DRC) on the real-geography
+   export map, or Punjab/Haryana/Delhi on the domestic one. This only
+   relaxes tight clusters; it doesn't reshuffle the overall layout.
+
+   `aspect` corrects for the map's 4:3 box: a 1% vertical gap covers fewer
+   actual pixels than a 1% horizontal gap, so vertically-stacked points
+   (e.g. Uganda/Kenya/DRC) look more cramped than the raw percentages
+   suggest — scale dy up before measuring "closeness" so they get pushed
+   apart enough to actually look spaced out, especially once translated
+   labels (typically longer than the English originals) are involved. */
+const declutterPoints = (points, minDist = 16, iterations = 100, aspect = 4 / 3) => {
+  const pts = points.map((p) => ({ ...p }));
+  for (let iter = 0; iter < iterations; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[j].x - pts[i].x;
+        const dy = (pts[j].y - pts[i].y) * aspect;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        if (dist < minDist) {
+          const overlap = (minDist - dist) / 2;
+          const ux = dx / dist;
+          const uy = dy / dist;
+          pts[i].x -= ux * overlap;
+          pts[i].y -= (uy * overlap) / aspect;
+          pts[j].x += ux * overlap;
+          pts[j].y += (uy * overlap) / aspect;
+          moved = true;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  return pts.map((p) => ({
+    ...p,
+    x: Math.min(96, Math.max(4, p.x)),
+    y: Math.min(92, Math.max(8, p.y)),
+  }));
+};
+
 /* ─── Static (illustrative) network-map panel — used for Domestic Reach ─── */
 const NetworkMap = ({ hub, hubLabel, points, active }) => {
+  const spread = declutterPoints(points);
   const arcPath = (a, b) => {
     const mx = (a.x + b.x) / 2;
     const my = (a.y + b.y) / 2 - 8;
@@ -56,7 +100,7 @@ const NetworkMap = ({ hub, hubLabel, points, active }) => {
       </svg>
 
       <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-        {points.map((p, i) => (
+        {spread.map((p, i) => (
           <path key={i} d={arcPath(hub, p)} fill="none" stroke="#00A86B" strokeWidth="0.4" strokeDasharray="2 1.5"
             className="transition-opacity duration-700" style={{ opacity: active ? 0.55 : 0, transitionDelay: `${i * 60}ms` }} />
         ))}
@@ -67,7 +111,7 @@ const NetworkMap = ({ hub, hubLabel, points, active }) => {
         <span className="font-poppins font-semibold text-white text-[10px] mt-1.5 whitespace-nowrap bg-[#040d20] px-1.5 rounded">{hubLabel}</span>
       </div>
 
-      {points.map((p, i) => (
+      {spread.map((p, i) => (
         <div key={i} className="absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-500"
           style={{ left: `${p.x}%`, top: `${p.y}%`, opacity: active ? 1 : 0, transitionDelay: `${i * 60}ms` }}>
           <div className="w-1.5 h-1.5 rounded-full bg-white ring-2 ring-white/20" />
@@ -105,7 +149,7 @@ const GlobalNetworkMap = ({ countryNames, active }) => {
   });
 
   const hub = toXY(INDIA_HUB_GEO.lat, INDIA_HUB_GEO.lon);
-  const matched = matchedRaw.map((p) => ({ name: p.name, ...toXY(p.lat, p.lon) }));
+  const matched = declutterPoints(matchedRaw.map((p) => ({ name: p.name, ...toXY(p.lat, p.lon) })));
 
   const arcPath = (a, b) => {
     const mx = (a.x + b.x) / 2;
@@ -158,10 +202,6 @@ const GlobalNetworkMap = ({ countryNames, active }) => {
   );
 };
 
-/* TEMPORARY: the CMS's `countries` field doesn't include these yet.
-   Appending them here so they show up on the map immediately — once
-   the backend/admin panel adds them to the real countries list, this
-   can be removed (they'll already be covered by COUNTRY_COORDS above). */
 const EXTRA_COUNTRIES = ["South Sudan", "DRC"];
 
 const ExportMarkets = () => {

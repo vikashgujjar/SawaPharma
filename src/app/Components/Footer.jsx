@@ -6,9 +6,10 @@ import { baseLink } from "../config/Apilink";
 import {
   MapPin, Mail, Phone, MessageCircle, ArrowUpRight,
 } from "lucide-react";
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
-const socialIcons = { facebook: FaFacebook, tweeter: FaTwitter, instagram: FaInstagram, youtube: FaYoutube };
+const socialIcons = { facebook: FaFacebook, tweeter: FaXTwitter, instagram: FaInstagram, youtube: FaYoutube };
 
 const productLinks = [
   { label: "Tablets", href: "/tablets" },
@@ -27,7 +28,7 @@ const aboutLinks = [
 
 const tickerItems = [
   "WHO-GMP CERTIFIED", "MADE IN INDIA", "EXPORT READY",
-  "500+ PRODUCTS", "10+ COUNTRIES SERVED", "24×7 SUPPORT",
+  "500+ PRODUCTS", "10+ COUNTRIES SERVED"
 ];
 
 const Footer = () => {
@@ -54,7 +55,7 @@ const Footer = () => {
   return (
     <>
       <Link
-        href="https://wa.me/919875939870"
+        href="https://wa.me/919875939879"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
@@ -94,7 +95,7 @@ const Footer = () => {
                 A comprehensive manufacturing solution for sterile and non-sterile pharmaceutical products.
               </p>
               <Link
-                href="/contact-us"
+                href="/contact-us/#contact-form"
                 className="inline-flex items-center gap-2 bg-white/5 border border-white/15 hover:bg-[#00A86B] hover:border-[#00A86B]
                   text-white font-poppins font-medium text-[12.5px] px-4 py-2.5 rounded-lg transition-all duration-300"
               >
@@ -139,8 +140,8 @@ const Footer = () => {
               <Link href="mailto:ceo@sawapharma.in" className="flex items-center gap-2.5 mb-2.5 font-inter text-white/60 text-[12.5px] hover:text-[#00A86B] transition-colors">
                 <Mail size={13} className="text-[#00A86B] shrink-0" /> ceo@sawapharma.in
               </Link>
-              <Link href="tel:+919875939878" className="flex items-center gap-2.5 font-inter text-white/60 text-[12.5px] hover:text-[#00A86B] transition-colors">
-                <Phone size={12} className="text-[#00A86B] shrink-0" /> +91 98759-39878
+              <Link href="tel:+919875939879" className="flex items-center gap-2.5 font-inter text-white/60 text-[12.5px] hover:text-[#00A86B] transition-colors">
+                <Phone size={12} className="text-[#00A86B] shrink-0" /> +91-9875939879 
               </Link>
 
               <div className="flex items-center gap-2 mt-5">
@@ -178,7 +179,15 @@ const Footer = () => {
               © 2025 <span className="font-semibold text-white/50">Sawa Pharma</span>. All Rights Reserved.
             </p>
             <p className="font-inter text-white/35 text-[12px]">
-              Developed by Future Touch
+              Designed & Developed by{" "}
+              <Link
+                href="https://www.futuretouch.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-[#00A86B] transition-colors"
+              >
+                Future IT Touch Pvt. Ltd.
+              </Link>
             </p>
           </div>
         </div>

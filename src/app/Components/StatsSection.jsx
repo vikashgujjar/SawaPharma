@@ -70,7 +70,7 @@ const AtomNode = ({ value, suffix, label, active, delay }) => {
             bg-gradient-to-b from-[#0B3B91] to-[#071B47]"
           style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
         >
-          <p className="font-poppins font-bold text-white leading-none text-xl sm:text-2xl">
+          <p className="notranslate font-poppins font-bold text-white leading-none text-xl sm:text-2xl" translate="no">
             {count}{suffix}
           </p>
           <span className="w-4 h-[2px] rounded-full bg-[#00A86B]" />
@@ -87,7 +87,7 @@ const AtomNode = ({ value, suffix, label, active, delay }) => {
 const MobileCount = ({ value, suffix, active }) => {
   const count = useCountUp(value, active);
   return (
-    <p className="font-poppins font-bold text-white leading-none text-xl">
+    <p className="notranslate font-poppins font-bold text-white leading-none text-xl" translate="no">
       {count}{suffix}
     </p>
   );

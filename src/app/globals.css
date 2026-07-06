@@ -352,4 +352,70 @@ html {
   box-shadow: none !important;
 }
 
+/* Translated strings often run 30-60% longer than the English originals
+   (e.g. Lingala, Somali, Russian). Google Translate marks the page with
+   translated-ltr/translated-rtl on <html> — use that hook to tighten up
+   the topbar, which is the tightest-packed part of the layout. */
+html.translated-ltr .i18n-shrink,
+html.translated-rtl .i18n-shrink {
+  font-size: 9.5px !important;
+  letter-spacing: -0.01em;
+}
+html.translated-ltr .badge-pill,
+html.translated-rtl .badge-pill {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+/* Mobile has the least room to absorb that extra length, and the topbar's
+   flat 9.5px above wasn't tuned specifically for small screens — tighten
+   further there. The navbar's mobile menu (nav links, submenu items, the
+   "Get a Quote" / "Quick Call" buttons) had no translated-length handling
+   at all before this, so give it the same treatment via `.i18n-nav-shrink`. */
+@media (max-width: 767px) {
+  html.translated-ltr .i18n-shrink,
+  html.translated-rtl .i18n-shrink {
+    font-size: 8.5px !important;
+    letter-spacing: -0.02em;
+  }
+
+  html.translated-ltr .i18n-nav-shrink,
+  html.translated-rtl .i18n-nav-shrink {
+    font-size: 11px !important;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Sitewide scroll-reveal: opt in per-section by adding the `.reveal` class
+   to any wrapper. A single global observer (RevealController, mounted once
+   in the root layout) adds `.is-visible` the first time each `.reveal`
+   element enters the viewport — so animating a new section anywhere on
+   the site is just adding a className, not hand-rolling an
+   IntersectionObserver in every component.
+
+   `.reveal-delay-1/2/3/4` stagger children of the same section (e.g. a
+   card grid) so they fade in one after another instead of all at once. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1.is-visible { transition-delay: 0.1s; }
+.reveal-delay-2.is-visible { transition-delay: 0.2s; }
+.reveal-delay-3.is-visible { transition-delay: 0.3s; }
+.reveal-delay-4.is-visible { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 

@@ -77,7 +77,7 @@ const QuickEnquiryForm = () => {
             Get a Quote
             <span className="w-1.5 h-1.5 rounded-full bg-[#00A86B] animate-pulse" />
           </h3>
-          <p className="font-inter text-white/45 text-[11px] mt-1.5">Our team replies within 24 hours</p>
+          <p className="font-inter text-white/45 text-[11px] mt-1.5">Get a fast response from our export team</p>
         </div>
         <div className="w-9 h-9 rounded-full bg-[#00A86B]/20 border border-[#00A86B]/40 flex items-center justify-center shrink-0">
           <Send size={14} className="text-[#00A86B]" />
@@ -107,7 +107,7 @@ const QuickEnquiryForm = () => {
         </button>
 
         <Link
-          href="https://wa.me/919875939870" target="_blank"
+          href="https://wa.me/919875939879" target="_blank"
           className="flex items-center justify-center gap-2 pt-3 border-t border-white/10
             text-white/50 text-[11px] font-inter hover:text-[#25D366] transition-colors duration-200"
         >
@@ -189,14 +189,14 @@ const Banner = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-3 mb-9">
-              <Link href="/contact-us"
+              <Link href="/contact-us/#contact-form"
                 className="inline-flex items-center gap-2 font-poppins font-semibold text-white bg-[#00A86B] rounded-xl
                   transition-all duration-300 hover:bg-[#008f5a] hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#00A86B]/30
                   text-sm px-6 py-3.5 w-full sm:w-auto justify-center">
                 <Download size={15} />
                 Request Product Catalogue
               </Link>
-              <Link href="/contact-us"
+              <Link href="/contact-us/#contact-form"
                 className="inline-flex items-center gap-2 font-poppins font-semibold text-white border-2 border-white/30 rounded-xl
                   transition-all duration-300 hover:bg-white hover:text-[#0B3B91] hover:border-white hover:-translate-y-0.5
                   text-sm px-6 py-3.5 w-full sm:w-auto justify-center">

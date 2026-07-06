@@ -32,13 +32,13 @@ const Topbar = () => {
     <div className="flex items-center flex-wrap gap-y-1.5 gap-3 xl:gap-5 shrink-0">
       {data?.number1 && (
         <Link
-          href={`tel:${data.number1}`}
+          href={`tel:+91-9875939879`}
           className="flex items-center gap-1.5 text-[11px] text-white/90 font-inter font-medium hover:text-[#00A86B] transition-colors group"
         >
           <span className="w-5 h-5 xl:w-6 xl:h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-[#00A86B]/20 transition-colors shrink-0">
-            <i className="fas fa-phone-alt text-[#00A86B] text-[8px] xl:text-[9px]"></i>
+            <i className="fas fa-phone-alt -scale-x-100 text-[#00A86B] text-[8px] xl:text-[9px]"></i>
           </span>
-          <span className="hidden md:inline i18n-shrink">{data.number1}</span>
+          <span className="hidden md:inline i18n-shrink">+91-9875939879</span>
         </Link>
       )}
       {data?.email && (
@@ -62,7 +62,7 @@ const Topbar = () => {
               className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white/80 hover:bg-[#00A86B] hover:text-white transition-all text-[10px]"
             >
               {item.platform === "facebook"  && <i className="fab fa-facebook-f"></i>}
-              {item.platform === "tweeter"   && <i className="fab fa-twitter"></i>}
+              {item.platform === "tweeter"   && <i className="fab fa-x-twitter"></i>}
               {item.platform === "instagram" && <i className="fab fa-instagram"></i>}
               {item.platform === "youtube"   && <i className="fab fa-youtube"></i>}
             </Link>

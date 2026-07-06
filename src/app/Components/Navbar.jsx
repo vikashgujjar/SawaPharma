@@ -164,15 +164,15 @@ const NavBar = () => {
           {/* ── Desktop CTA ──────────────────────────────── */}
           <div className="hidden lg:flex items-center gap-2 xl:gap-3 shrink-0">
             <Link
-              href="tel:+91"
+              href="tel:+919875939879"
               className="hidden xl:flex items-center gap-2 text-[12px] xl:text-[13px] font-poppins font-semibold text-[#0B3B91] hover:text-[#00A86B] transition-colors duration-200"
             >
-              <i className="fas fa-phone-alt text-[#00A86B] text-xs" />
+              <i className="fas fa-phone-alt -scale-x-100 text-[#00A86B] text-xs" />
               Quick Call
             </Link>
             <div className="hidden xl:block w-px h-5 bg-gray-200" />
             <Link
-              href="/contact-us"
+              href="/contact-us/#contact-form"
               className="flex items-center gap-1.5 xl:gap-2 font-poppins font-semibold text-[11px] xl:text-[13px] bg-[#00A86B] text-white px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg hover:bg-[#008f5a] transition-all duration-200 uppercase tracking-wide shadow-sm hover:shadow-md whitespace-nowrap"
             >
               Get a Quote
@@ -213,7 +213,7 @@ const NavBar = () => {
                 >
                   <Link
                     href={item.href}
-                    className={`font-poppins text-[13px] sm:text-[14px] font-semibold uppercase tracking-wide transition-colors
+                    className={`i18n-nav-shrink font-poppins text-[13px] sm:text-[14px] font-semibold uppercase tracking-wide transition-colors
                       ${active ? 'text-[#0B3B91]' : 'text-gray-800 hover:text-[#0B3B91]'}`}
                     onClick={() => !item.subMenu && setMobileMenuOpen(false)}
                   >
@@ -241,7 +241,7 @@ const NavBar = () => {
                       <li key={si}>
                         <Link
                           href={sub.href}
-                          className={`flex items-center gap-3 py-2.5 sm:py-3 px-2 font-inter text-[13px] sm:text-[14px] font-medium transition-colors
+                          className={`i18n-nav-shrink flex items-center gap-3 py-2.5 sm:py-3 px-2 font-inter text-[13px] sm:text-[14px] font-medium transition-colors
                             ${subActive ? 'text-[#0B3B91]' : 'text-gray-600 hover:text-[#0B3B91]'}`}
                           onClick={() => setMobileMenuOpen(false)}
                         >
@@ -264,7 +264,7 @@ const NavBar = () => {
           <div className="mt-5 flex flex-col sm:flex-row gap-2 sm:gap-3">
             <Link
               href="/contact-us"
-              className="flex-1 flex items-center justify-center gap-2 bg-[#0B3B91] text-white font-poppins font-semibold text-[13px] sm:text-[14px] py-3 sm:py-3.5 rounded-lg uppercase tracking-wide"
+              className="i18n-nav-shrink flex-1 flex items-center justify-center gap-2 bg-[#0B3B91] text-white font-poppins font-semibold text-[13px] sm:text-[14px] py-3 sm:py-3.5 rounded-lg uppercase tracking-wide"
               onClick={() => setMobileMenuOpen(false)}
             >
               Get a Quote
@@ -272,10 +272,10 @@ const NavBar = () => {
             </Link>
             <Link
               href="tel:+91"
-              className="flex-1 flex items-center justify-center gap-2 border-2 border-[#00A86B] text-[#00A86B] font-poppins font-semibold text-[13px] sm:text-[14px] py-3 sm:py-3.5 rounded-lg uppercase tracking-wide hover:bg-[#00A86B] hover:text-white transition-colors duration-200"
+              className="i18n-nav-shrink flex-1 flex items-center justify-center gap-2 border-2 border-[#00A86B] text-[#00A86B] font-poppins font-semibold text-[13px] sm:text-[14px] py-3 sm:py-3.5 rounded-lg uppercase tracking-wide hover:bg-[#00A86B] hover:text-white transition-colors duration-200"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <i className="fas fa-phone-alt text-xs" />
+              <i className="fas fa-phone-alt -scale-x-100 text-xs" />
               Quick Call
             </Link>
           </div>

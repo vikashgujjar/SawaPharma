@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Breadcrumb from "../Components/Breadcrumb";
 import { Globe2, Target, Award, ShieldCheck } from "lucide-react";
 
@@ -86,9 +87,12 @@ const CompanyProfilePage = () => (
                   {c}
                 </span>
               ))}
-              <span className="font-inter text-gray-400 text-[12px] bg-[#EAF4FF]/50 border border-dashed border-gray-200 rounded-full px-3 py-1.5">
+              <Link
+                href="/our-presence/"
+                className="font-inter text-[#0B3B91] text-[12px] bg-[#EAF4FF]/50 border border-dashed border-[#0B3B91]/30 rounded-full px-3 py-1.5 hover:bg-[#EAF4FF] hover:border-[#0B3B91]/50 transition-colors"
+              >
                 +more
-              </span>
+              </Link>
             </div>
           </div>
 

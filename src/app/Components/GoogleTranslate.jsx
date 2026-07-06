@@ -9,6 +9,34 @@ const INCLUDED_LANGUAGES = "en,ru,tg,pt,fr,ln,sw,ps,fa,km,so,ar";
 const GoogleTranslate = () => {
   return (
     <>
+      {/* Google Translate rewrites text nodes directly in the DOM. If a
+          component re-renders afterward (e.g. Topbar's async data fetch),
+          React can try to remove/insert a node Translate has already
+          restructured and throw "removeChild on Node" — which unmounts
+          whatever it was rendering. Patch the two DOM methods to no-op
+          instead of throwing when that happens; this is the standard
+          workaround for the React + Google Translate conflict. */}
+      <Script id="google-translate-dom-patch" strategy="beforeInteractive">
+        {`
+          (function () {
+            if (typeof Node !== "function" || !Node.prototype) return;
+            var originalRemoveChild = Node.prototype.removeChild;
+            Node.prototype.removeChild = function (child) {
+              if (child.parentNode !== this) {
+                return child;
+              }
+              return originalRemoveChild.apply(this, arguments);
+            };
+            var originalInsertBefore = Node.prototype.insertBefore;
+            Node.prototype.insertBefore = function (newNode, referenceNode) {
+              if (referenceNode && referenceNode.parentNode !== this) {
+                return newNode;
+              }
+              return originalInsertBefore.apply(this, arguments);
+            };
+          })();
+        `}
+      </Script>
       <div id="google_translate_element" className="hidden" />
       <Script id="google-translate-init" strategy="afterInteractive">
         {`

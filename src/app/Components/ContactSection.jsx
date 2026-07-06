@@ -21,7 +21,6 @@ const quickInfo = [
       "Khasra No. 823/824, Village Gularwala, Near Saraswati",
       "Vidya Mandir School Gularwala, Teh. Baddi, Distt. Solan, HP - 173205",
     ],
-    links: [{ label: "+91-94590-89604", href: "tel:+919459089604" }],
   },
   {
     Icon: Factory,
@@ -40,8 +39,8 @@ const quickInfo = [
     Icon: Phone,
     title: "Call Us",
     links: [
-      { label: "+91 98759-39878", href: "tel:+919875939878" },
       { label: "+91 98759-39879", href: "tel:+919875939879" },
+      { label: "+91 98759-39884", href: "tel:+919875939884" },
       { label: "0172 4523651", href: "tel:01724523651" },
     ],
   },
@@ -198,7 +197,7 @@ const ContactSection = () => {
 
               {/* whatsapp */}
               <Link
-                href="https://wa.me/919875939870"
+                href="https://wa.me/919875939879"
                 target="_blank"
                 className="bg-[#00A86B] rounded-2xl p-5 flex flex-col justify-between hover:bg-[#008f5a] transition-colors group"
               >
@@ -217,7 +216,7 @@ const ContactSection = () => {
           </div>
 
           {/* ── Right: form ── */}
-          <div className="bg-[#EAF4FF]/30 rounded-2xl p-6 sm:p-8 border border-[#0B3B91]/8">
+          <div id="contact-form" className="scroll-mt-24 bg-[#EAF4FF]/30 rounded-2xl p-6 sm:p-8 border border-[#0B3B91]/8">
             <p className="font-inter text-gray-500 text-[13.5px] leading-relaxed mb-6">
               Whether you have questions, need support, or want to know more about our products and services,
               feel free to reach out.

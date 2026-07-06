@@ -53,6 +53,44 @@ const COUNTRY_COORDS = {
 
 const HUB = { lat: 20.6, lon: 78.9, label: "India" }; // manufacturing hub
 
+/* Nudges apart points that are closer than `minDist` (in the 0–100 %
+   coordinate space) so labels don't overlap when several countries are
+   geographically close together (e.g. Uganda/Kenya/Somalia/South Sudan).
+   `aspect` accounts for this map's wide box (16:9 / 2:1) — a 1% vertical
+   gap covers far fewer pixels than a 1% horizontal one, so vertically
+   stacked points need extra push to actually look spaced out, especially
+   once translated labels (usually longer than the English originals)
+   are involved. Same technique used on the homepage's export map. */
+const declutterPoints = (points, minDist = 16, iterations = 100, aspect = 16 / 9) => {
+  const pts = points.map((p) => ({ ...p }));
+  for (let iter = 0; iter < iterations; iter++) {
+    let moved = false;
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const dx = pts[j].x - pts[i].x;
+        const dy = (pts[j].y - pts[i].y) * aspect;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 0.001;
+        if (dist < minDist) {
+          const overlap = (minDist - dist) / 2;
+          const ux = dx / dist;
+          const uy = dy / dist;
+          pts[i].x -= ux * overlap;
+          pts[i].y -= (uy * overlap) / aspect;
+          pts[j].x += ux * overlap;
+          pts[j].y += (uy * overlap) / aspect;
+          moved = true;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+  return pts.map((p) => ({
+    ...p,
+    x: Math.min(96, Math.max(4, p.x)),
+    y: Math.min(92, Math.max(8, p.y)),
+  }));
+};
+
 const RouteMap = ({ countries, active }) => {
   const matchedRaw = countries
     .map((name) => {
@@ -82,7 +120,7 @@ const RouteMap = ({ countries, active }) => {
   });
 
   const hub = toXY(HUB.lat, HUB.lon);
-  const matched = matchedRaw.map((p) => ({ name: p.name, ...toXY(p.lat, p.lon) }));
+  const matched = declutterPoints(matchedRaw.map((p) => ({ name: p.name, ...toXY(p.lat, p.lon) })));
 
   const arcPath = (a, b) => {
     const mx = (a.x + b.x) / 2;
@@ -297,7 +335,11 @@ const Page = () => {
                   </div>
                   <div>
                     <p className="font-poppins font-semibold text-[#0B3B91] text-[13px] mb-1">Hours</p>
-                    <p className="font-inter text-gray-500 text-[12.5px]">Monday – Saturday: 9:30 AM – 5:30 PM</p>
+                    <p className="font-inter text-gray-500 text-[12.5px] leading-relaxed">
+                      Monday – Friday: 9:00 AM – 6:00 PM<br />
+                      Saturday: 9:00 AM – 2:00 PM<br />
+                      Sunday: Closed
+                    </p>
                   </div>
                 </div>
               </div>
