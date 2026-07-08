@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { baseLink } from "../config/Apilink";
+import { useRouter } from "next/navigation";
 import {
   MapPin, Factory, Syringe, Phone, Mail, Clock, MessageCircle,
   User, Package, MessageSquare, Send,
@@ -40,7 +40,7 @@ const quickInfo = [
     title: "Call Us",
     links: [
       { label: "+91 98759-39879", href: "tel:+919875939879" },
-      { label: "+91 98759-39884", href: "tel:+919875939884" },
+      { label: "+91 98759-39870", href: "tel:+919875939870" },
       { label: "0172 4523651", href: "tel:01724523651" },
     ],
   },
@@ -67,7 +67,9 @@ const facilityPhotos = [
 ];
 
 const ContactSection = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({ name: "", email: "", number: "", product: "", text: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
 
@@ -87,27 +89,33 @@ const ContactSection = () => {
       return;
     }
 
+    setLoading(true);
+
+    const payload = {
+      company: "Sawa Pharma India Pvt. Ltd.",
+      company_name: "Sawa Pharma India Pvt. Ltd.",
+      name,
+      phone: number || "N/A",
+      email,
+      serviceType: product || "General Enquiry",
+      message: text,
+      mail_to: "ceo@sawapharma.in",
+    };
+
     try {
-      const response = await fetch(`${baseLink}/message`, {
+      const response = await fetch("https://mail.futuretouch.org/api/send-message", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, text, product, number }),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
-        Swal.fire({
-          title: "Success!",
-          text: "Message sent successfully!",
-          icon: "success",
-          confirmButtonText: "OK",
-          confirmButtonColor: "#00A86B",
-        });
         setFormData({ name: "", email: "", number: "", product: "", text: "" });
+        router.push("/thank-you/");
       } else {
-        const errorData = await response.json().catch(() => ({}));
         Swal.fire({
           title: "Failed!",
-          text: errorData.message || "Failed to send the message. Please try again.",
+          text: "Failed to send the message. Please try again.",
           icon: "error",
           confirmButtonText: "Retry",
           confirmButtonColor: "#f44336",
@@ -122,6 +130,8 @@ const ContactSection = () => {
         confirmButtonText: "Retry",
         confirmButtonColor: "#f44336",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -256,12 +266,14 @@ const ContactSection = () => {
 
               <button
                 type="submit"
+                disabled={loading}
                 className="self-start inline-flex items-center gap-2 bg-[#00A86B] hover:bg-[#008f5a] text-white
                   font-poppins font-semibold text-[13.5px] px-6 py-3 rounded-xl transition-all duration-300
-                  hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#00A86B]/25"
+                  hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#00A86B]/25
+                  disabled:opacity-60 disabled:pointer-events-none disabled:translate-y-0"
               >
                 <Send size={14} />
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>

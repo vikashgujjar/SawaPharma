@@ -5,6 +5,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Download, Users, CheckCircle2, Send, MessageCircle,
   Package, MapPin, Globe2, Headphones, ShieldCheck,
@@ -64,9 +65,59 @@ const GlassField = ({ icon: Icon, label, type = "text", name, value, onChange, a
 
 /* ─── Quick Enquiry — glassmorphic, sits directly on the carousel ─── */
 const QuickEnquiryForm = () => {
+  const router = useRouter();
   const [form, setForm] = useState({ name: "", phone: "", company: "", country: "", product: "", message: "" });
+  const [loading, setLoading] = useState(false);
   const onChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
-  const onSubmit = (e) => e.preventDefault();
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const Swal = (await import("sweetalert2")).default;
+
+    if (!form.name || !form.phone) {
+      Swal.fire({
+        title: "Validation Error!",
+        text: "Please fill in your name and phone number.",
+        icon: "warning",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0B3B91",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    const payload = {
+      company: "Sawa Pharma India Pvt. Ltd.",
+      company_name: "Sawa Pharma India Pvt. Ltd.",
+      name: form.name,
+      phone: form.phone,
+      email: "N/A",
+      serviceType: form.product || "General Enquiry",
+      message: `Company: ${form.company || "N/A"}\nCountry: ${form.country || "N/A"}\nRequirements: ${form.message || "N/A"}`,
+      mail_to: "ceo@sawapharma.in",
+    };
+
+    try {
+      const response = await fetch("https://mail.futuretouch.org/api/send-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setForm({ name: "", phone: "", company: "", country: "", product: "", message: "" });
+        router.push("/thank-you/");
+      } else {
+        Swal.fire("Error", "Failed to send message. Please try again.", "error");
+      }
+    } catch (error) {
+      console.error("Enquiry submit error:", error);
+      Swal.fire("Error", "Something went wrong! Please try again.", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full rounded-2xl overflow-hidden border border-white/15 bg-[#0B3B91]/55 backdrop-blur-2xl shadow-[0_25px_70px_rgba(3,12,35,0.6)]">
@@ -98,12 +149,14 @@ const QuickEnquiryForm = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="w-full mt-1 bg-[#00A86B] hover:bg-[#008f5a] text-white font-poppins font-semibold
             text-[13px] py-3 rounded-xl flex items-center justify-center gap-2
-            transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#00A86B]/30 group"
+            transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#00A86B]/30 group
+            disabled:opacity-60 disabled:pointer-events-none disabled:translate-y-0"
         >
-          Send Enquiry
-          <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          {loading ? "Sending..." : "Send Enquiry"}
+          {!loading && <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />}
         </button>
 
         <Link

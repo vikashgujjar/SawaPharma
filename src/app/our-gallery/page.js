@@ -27,7 +27,7 @@ import { Plus } from "lucide-react";
 ───────────────────────────────────────────────────────── */
 
 const imageUrls = [
-  "/images/gallery/1.webp", "/images/gallery/2.webp", "/images/gallery/6.webp",
+  "/images/galleryNew/new8.webp","/images/galleryNew/new9.webp","/images/galleryNew/new5.webp","/images/galleryNew/new4.webp","/images/galleryNew/new6.webp","/images/galleryNew/new7.webp","/images/galleryNew/new6.webp","/images/galleryNew/new2.webp","/images/galleryNew/new1.webp","/images/gallery/1.webp", "/images/gallery/2.webp", "/images/gallery/6.webp",
   "/images/gallery/9.webp", "/images/gallery/10.webp", "/images/gallery/11.webp",
   "/images/gallery/12.webp", "/images/gallery/13.webp", "/images/gallery/14.webp",
   "/images/gallery/15.webp", "/images/gallery/16.webp", "/images/gallery/17.webp",

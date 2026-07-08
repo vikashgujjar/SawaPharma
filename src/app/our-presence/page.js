@@ -42,29 +42,31 @@ const LOCATIONS = [
   },
   {
     header: "Warehouse",
-    address: "Khasra No. 823/824, Village Gularwala, Near Saraswati Vidya Mandir School, Teh. Baddi, Distt. Solan, Himachal Pradesh 173205",
+    address: "Khasra No. 823/824, Village Gularwala, Near Saraswati Vidya Mandir School, Teh. Baddi, Distt. Solan, Himachal Pradesh 173205, India",
     lat: 30.9446590,
     lng: 76.8071853,
   },
   {
     header: "Unit 1",
-    address: "SIDCO Industrial Complex, Kathua, Jammu and Kashmir 184101",
+    address: "SIDCO Industrial Complex, Kathua, Jammu and Kashmir 184101, India",
     lat: 32.3765524,
     lng: 75.5243044,
   },
   {
     header: "Unit II",
-    address: "Village Kishanpura, P.O. Manpura, Nalagarh Road, Tehsil Baddi, Distt. Solan, Himachal Pradesh 174101",
+    address: "Village Kishanpura, P.O. Manpura, Nalagarh Road, Tehsil Baddi, Distt. Solan, Himachal Pradesh 174101, India",
     lat: 31.0627930,
     lng: 76.6960073,
   },
 ];
 
+/* Ordered to match LOCATIONS above: Corporate Office, Warehouse, Unit 1, Unit II.
+   TEMPORARY stock photos — swap for the client's real facility photos once shared. */
 const locationPhotos = [
-  "https://images.unsplash.com/photo-1758448721149-aa0ce8e1b2c9?q=85&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1626420925443-c6421f87daa9?q=85&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?q=85&w=600&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1562243061-204550d8a2c9?q=85&w=600&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1758448721149-aa0ce8e1b2c9?q=85&w=600&auto=format&fit=crop", // Corporate Office — lobby
+  "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?q=85&w=600&auto=format&fit=crop", // Warehouse — storage shelving
+  "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?q=85&w=600&auto=format&fit=crop", // Unit 1 — tablets & capsules
+  "https://images.unsplash.com/photo-1670098073774-440ea94549d0?q=85&w=600&auto=format&fit=crop", // Unit II — injection/syringe
 ];
 
 const Page = () => {

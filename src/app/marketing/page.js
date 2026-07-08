@@ -46,12 +46,21 @@ const COUNTRY_COORDS = {
   "united kingdom": [55.4, -3.4], "uk": [55.4, -3.4], "russia": [61.5, 105.3],
   "philippines": [12.9, 121.8], "vietnam": [14.1, 108.3], "nepal": [28.4, 84.1],
   "sri lanka": [7.9, 80.8], "india": [20.6, 78.9], "yemen": [15.6, 48.5],
-  "sudan": [12.9, 30.2], "tanzania": [-6.4, 34.9], "ethiopia": [9.1, 40.5],
+  "sudan": [12.9, 30.2], "south sudan": [7.3, 30.0], "tanzania": [-6.4, 34.9], "ethiopia": [9.1, 40.5],
   "zambia": [-13.1, 27.8], "myanmar": [21.9, 95.9], "bangladesh": [23.7, 90.4],
   "iraq": [33.2, 43.7], "syria": [34.8, 38.9],
+  "democratic republic of the congo": [-4.0, 21.8], "dr congo": [-4.0, 21.8], "drc": [-4.0, 21.8],
 };
 
 const HUB = { lat: 20.6, lon: 78.9, label: "India" }; // manufacturing hub
+
+/* TEMPORARY: the CMS's `countries` field doesn't include these yet.
+   Appending them here so they show up on the map immediately — once
+   the backend/admin panel adds them to the real countries list, this
+   can be removed (they'll already be covered by COUNTRY_COORDS above).
+   Kept identical to the same list on the homepage's export map so both
+   sections show the same countries. */
+const EXTRA_COUNTRIES = ["South Sudan", "DRC"];
 
 /* Nudges apart points that are closer than `minDist` (in the 0–100 %
    coordinate space) so labels don't overlap when several countries are
@@ -239,11 +248,16 @@ const Page = () => {
     return () => observer.disconnect();
   }, [loading]);
 
-  const countries =
+  const baseCountries =
     data?.countries?.[0]
       ?.split(",")
       .map((c) => c.trim())
       .filter(Boolean) || [];
+  const knownCountries = new Set(baseCountries.map((c) => c.toLowerCase()));
+  const countries = [
+    ...baseCountries,
+    ...EXTRA_COUNTRIES.filter((c) => !knownCountries.has(c.toLowerCase())),
+  ];
 
   return (
     <>

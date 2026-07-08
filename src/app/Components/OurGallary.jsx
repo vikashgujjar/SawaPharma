@@ -36,12 +36,7 @@ const categories = [
    proper photography is uploaded through the admin panel. Remove this
    override (and go back to `${storageLink}/${item.image}`) once that's done. */
 const STOCK_GALLERY_IMAGES = [
-  "https://images.unsplash.com/photo-1748000970909-845f4aa144d2?q=85&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1669101602124-f5b78895d91c?q=85&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1668600418844-5b3d2e381e10?q=85&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1669101283516-e608dcf142df?q=85&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1639772823849-6efbd173043c?q=85&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1573207535342-8c0f9506112e?q=85&w=1200&auto=format&fit=crop",
+  "/images/galleryNew/new8.webp","/images/galleryNew/new9.webp","/images/galleryNew/new5.webp","/images/galleryNew/new4.webp","/images/galleryNew/new2.webp","/images/galleryNew/new6.webp"
 ];
 
 const GalleryDark = () => {

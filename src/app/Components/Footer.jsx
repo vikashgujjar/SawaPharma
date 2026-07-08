@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { baseLink } from "../config/Apilink";
 import {
-  MapPin, Mail, Phone, MessageCircle, ArrowUpRight,
+  Mail, Phone, MessageCircle, ArrowUpRight,
 } from "lucide-react";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -131,12 +131,6 @@ const Footer = () => {
 
             <div>
               <h5 className="font-poppins font-semibold text-white/40 text-[11px] tracking-[0.2em] uppercase mb-4">Get In Touch</h5>
-              <div className="flex items-start gap-2.5 mb-3">
-                <MapPin size={14} className="text-[#00A86B] shrink-0 mt-0.5" />
-                <p className="font-inter text-white/60 text-[12.5px] leading-relaxed">
-                  SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana - 134109
-                </p>
-              </div>
               <Link href="mailto:ceo@sawapharma.in" className="flex items-center gap-2.5 mb-2.5 font-inter text-white/60 text-[12.5px] hover:text-[#00A86B] transition-colors">
                 <Mail size={13} className="text-[#00A86B] shrink-0" /> ceo@sawapharma.in
               </Link>
