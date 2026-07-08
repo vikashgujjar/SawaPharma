@@ -107,7 +107,7 @@ const QuickEnquiryForm = () => {
         </button>
 
         <Link
-          href="https://wa.me/919875939879" target="_blank"
+          href="https://wa.me/919875939870" target="_blank"
           className="flex items-center justify-center gap-2 pt-3 border-t border-white/10
             text-white/50 text-[11px] font-inter hover:text-[#25D366] transition-colors duration-200"
         >

@@ -36,7 +36,7 @@ import { MapPin, Navigation, ChevronRight } from "lucide-react";
 const LOCATIONS = [
   {
     header: "Corporate Office",
-    address: "SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana 134109",
+    address: "SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana 134109, India",
     lat: 30.6985119,
     lng: 76.8553314,
   },

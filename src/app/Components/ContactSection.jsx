@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { baseLink } from "../config/Apilink";
 import {
-  MapPin, Factory, Phone, Mail, Clock, MessageCircle,
+  MapPin, Factory, Syringe, Phone, Mail, Clock, MessageCircle,
   User, Package, MessageSquare, Send,
 } from "lucide-react";
 
@@ -12,27 +12,27 @@ const quickInfo = [
   {
     Icon: MapPin,
     title: "Corporate Office",
-    lines: ["SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5,", "Panchkula, Haryana - 134109 (Near Indian Overseas Bank, MDC)"],
+    lines: ["SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5,", "Panchkula, Haryana - 134109 (Near Indian Overseas Bank, MDC), India"],
   },
   {
     Icon: Factory,
     title: "Warehouse",
     lines: [
       "Khasra No. 823/824, Village Gularwala, Near Saraswati",
-      "Vidya Mandir School Gularwala, Teh. Baddi, Distt. Solan, HP - 173205",
+      "Vidya Mandir School Gularwala, Teh. Baddi, Distt. Solan, HP - 173205, India",
     ],
   },
   {
     Icon: Factory,
     title: "Unit 1",
-    lines: ["SIDCO Industrial Complex, Kathua,", "Kathua, Jammu and Kashmir - 184101"],
+    lines: ["SIDCO Industrial Complex, Kathua,", "Kathua, Jammu and Kashmir - 184101, India"],
   },
   {
-    Icon: Factory,
+    Icon: Syringe,
     title: "Unit II",
     lines: [
       "Vill. Kishanpura, P.O. Manpura, Nalagarh Road,",
-      "Tehsil-Baddi, Distt. Solan, Himachal Pradesh - 174101",
+      "Tehsil-Baddi, Distt. Solan, Himachal Pradesh - 174101, India",
     ],
   },
   {
@@ -52,9 +52,8 @@ const quickInfo = [
 ];
 
 const businessHours = [
-  { day: "Monday – Friday", hours: "9:00 AM – 6:00 PM" },
-  { day: "Saturday",        hours: "9:00 AM – 2:00 PM" },
-  { day: "Sunday",          hours: "Closed" },
+  { day: "Monday – Saturday", hours: "9:00 AM – 6:00 PM" },
+  { day: "Sunday",            hours: "Closed" },
 ];
 
 /* Office location used for the map embed. */
@@ -197,7 +196,7 @@ const ContactSection = () => {
 
               {/* whatsapp */}
               <Link
-                href="https://wa.me/919875939879"
+                href="https://wa.me/919875939870"
                 target="_blank"
                 className="bg-[#00A86B] rounded-2xl p-5 flex flex-col justify-between hover:bg-[#008f5a] transition-colors group"
               >

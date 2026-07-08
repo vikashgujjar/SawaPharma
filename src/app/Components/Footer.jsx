@@ -55,7 +55,7 @@ const Footer = () => {
   return (
     <>
       <Link
-        href="https://wa.me/919875939879"
+        href="https://wa.me/919875939870"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"

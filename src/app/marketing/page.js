@@ -310,7 +310,7 @@ const Page = () => {
                     <p className="font-poppins font-semibold text-[#0B3B91] text-[13px] mb-1">Sawa Pharma India Pvt. Ltd.</p>
                     <p className="font-inter text-gray-500 text-[12.5px] leading-relaxed">
                       SCO 21, 1st Floor, Swastik Vihar, MDC, Sector 5, Panchkula, Haryana - 134109
-                      (Near Indian Overseas Bank, MDC)
+                      (Near Indian Overseas Bank, MDC), India
                     </p>
                   </div>
                 </div>
@@ -336,8 +336,7 @@ const Page = () => {
                   <div>
                     <p className="font-poppins font-semibold text-[#0B3B91] text-[13px] mb-1">Hours</p>
                     <p className="font-inter text-gray-500 text-[12.5px] leading-relaxed">
-                      Monday – Friday: 9:00 AM – 6:00 PM<br />
-                      Saturday: 9:00 AM – 2:00 PM<br />
+                      Monday – Saturday: 9:00 AM – 6:00 PM<br />
                       Sunday: Closed
                     </p>
                   </div>
